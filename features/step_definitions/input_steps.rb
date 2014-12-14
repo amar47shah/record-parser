@@ -2,7 +2,7 @@ Given /^I have not started a session$/  do
 end
 
 When /^I start a session with a file called 'data\/records\.txt'$/  do
-  pending
+  RecordParser::Session.new('data/records.txt')
 end
 
 Then /^I should see 'Welcome to the Record Parser'$/  do
