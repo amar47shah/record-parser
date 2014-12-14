@@ -15,8 +15,12 @@ end
 Given /^I have not started a session$/  do
 end
 
-When /^I start a session with a file called 'data\/records\.txt'$/  do
-  RecordParser::Session.new('data/records.txt', fake_output)
+When /^I start a session$/ do
+  @session = RecordParser::Session.new(fake_output)
+end
+
+When /^I input a file called 'data\/records\.txt'$/  do
+  @session.input('data/records.txt')
 end
 
 Then /^I should see 'Welcome to the Record Parser'$/  do
