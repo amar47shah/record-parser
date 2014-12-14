@@ -1,5 +1,5 @@
 module RecordParser
   class Session
-    def initialize(file) ; end
+    def initialize(input, output) ; end
   end
 end
