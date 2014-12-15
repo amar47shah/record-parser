@@ -6,7 +6,7 @@ class FakeFile
     @contents
   end
 
-  def to_s
+  def filename
     @name
   end
 end

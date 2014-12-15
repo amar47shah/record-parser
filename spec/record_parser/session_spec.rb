@@ -28,6 +28,7 @@ module RecordParser
     before do
       allow(out).to receive(:puts)
       allow(file).to receive(:read)
+      allow(file).to receive(:filename)
     end
 
     describe '#initialize' do
@@ -38,8 +39,10 @@ module RecordParser
     end
 
     describe '#input' do
+      let(:filename) { 'data/records.txt' }
+      before { allow(file).to receive(:filename).and_return(filename) }
       it 'notes the file being parsed' do
-        expect_output("Parsing #{file}")
+        expect_output("Parsing #{filename}")
         session.input(file)
       end
     end

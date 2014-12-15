@@ -6,7 +6,7 @@ module RecordParser
     end
 
     def input(file)
-      @out.puts "Parsing #{file}"
+      @out.puts "Parsing #{file.filename}"
       @contents = file.read
     end
 
