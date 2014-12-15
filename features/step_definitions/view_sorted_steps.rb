@@ -1,5 +1,14 @@
 class FakeFile
   attr_accessor :contents
+  attr_writer :name
+
+  def read
+    @contents
+  end
+
+  def to_s
+    @name
+  end
 end
 
 def fake_file
