@@ -10,8 +10,8 @@ module RecordParser
 
   shared_examples 'displays lines in descending order' do
     it 'displays each line' do
-      expect(out).to receive(:puts).with("Rue").ordered
-      expect(out).to receive(:puts).with("Chandra").ordered
+      expect(out).to receive(:puts).with('Rue').ordered
+      expect(out).to receive(:puts).with('Chandra').ordered
       session.show
     end
   end
