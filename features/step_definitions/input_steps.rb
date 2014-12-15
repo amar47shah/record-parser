@@ -6,6 +6,6 @@ When /^I start a session$/ do
 end
 
 When /^I input a file called 'data\/records\.txt'$/ do
-  fake_file.name = 'data/records.txt'
+  fake_file.filename = 'data/records.txt'
   @session.input(fake_file)
 end

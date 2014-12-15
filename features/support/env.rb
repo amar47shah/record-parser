@@ -19,15 +19,11 @@ class CustomWorld
 end
 
 class FakeFile
-  attr_accessor :contents
-  attr_writer :name
+  attr_writer :contents
+  attr_accessor :filename
 
   def read
     @contents
-  end
-
-  def filename
-    @name
   end
 end
 
