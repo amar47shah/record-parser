@@ -9,4 +9,4 @@ Feature: record manager inputs file
     When I start a session
       And I input a file called 'data/records.txt'
     Then I should see 'Welcome to the Record Parser'
-    Then I should see 'Parsing data/records.txt'
+      And I should see 'Parsing data/records.txt'
