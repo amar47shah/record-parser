@@ -2,6 +2,10 @@ require 'spec_helper'
 
 module RecordParser
   describe Session do
+    def expect_output(message)
+      expect(out).to receive(:puts).with(message)
+    end
+
     let(:out) { double('Out') }
     let(:session) { Session.new(out) }
 
@@ -9,7 +13,7 @@ module RecordParser
 
     describe '#initialize' do
       it 'welcomes' do
-        expect(out).to receive(:puts).with('Welcome to the Record Parser')
+        expect_output('Welcome to the Record Parser')
         session
       end
     end
@@ -17,7 +21,7 @@ module RecordParser
     describe '#input' do
       let(:file) { double('File') }
       it 'notes the file being parsed' do
-        expect(out).to receive(:puts).with("Parsing #{file}")
+        expect_output("Parsing #{file}")
         session.input(file)
       end
     end
