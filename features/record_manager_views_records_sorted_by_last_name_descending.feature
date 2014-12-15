@@ -4,7 +4,12 @@ Feature: record manager views records sorted by last name descending
   I want to view records sorted by last name descending
 
   Scenario: view records sorted by last name descending
-    Given I have input the records "Chandra\nRue\nHart\n"
+    Given I have input the records
+      """
+      Chandra
+      Rue
+      Hart
+      """
     When My records are sorted
     Then I should see 'Rue'
       And I should see 'Hart'

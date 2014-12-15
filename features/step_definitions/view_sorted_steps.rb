@@ -10,7 +10,7 @@ def session
   @session ||= RecordParser::Session.new(fake_output)
 end
 
-Given /^I have input the records "(.*?)"$/ do |records|
+Given /^I have input the records$/ do |records|
   fake_file.contents = records
   session.input(fake_file)
 end
