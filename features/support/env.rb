@@ -19,8 +19,8 @@ class CustomWorld
 end
 
 class FakeFile
-  attr_writer :contents
   attr_accessor :filename
+  attr_writer :contents
 
   def read
     @contents
