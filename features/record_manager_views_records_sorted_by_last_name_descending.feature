@@ -11,6 +11,9 @@ Feature: record manager views records sorted by last name descending
       Hart
       """
     When My records are sorted
-    Then I should see 'Rue'
-      And I should see 'Hart'
-      And I should see 'Chandra'
+    Then I should see
+      """
+      Rue
+      Hart
+      Chandra
+      """
