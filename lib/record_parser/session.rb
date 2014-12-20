@@ -11,11 +11,23 @@ module RecordParser
     end
 
     def show_by_gender_and_last_name
-      @out.puts @contents.chomp
+      lines.partition { |l| l.split(' ')[2] == 'F' }.each do |gender_set|
+        gender_set.sort.each { |line| puts line }
+      end
     end
 
     def show_by_last_name_descending
-      @contents.lines.sort.reverse_each { |line| @out.puts line.chomp }
+      lines.sort.reverse_each { |line| puts line }
+    end
+
+  private
+
+    def lines
+      @contents.lines
+    end
+
+    def puts(line)
+      @out.puts line.chomp
     end
   end
 end

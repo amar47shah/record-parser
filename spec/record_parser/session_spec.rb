@@ -2,6 +2,11 @@ require 'spec_helper'
 
 module RecordParser
   describe Session do
+    def expect_ordered_output(first, last)
+      expect(out).to receive(:puts).with(first).ordered
+      expect(out).to receive(:puts).with(last).ordered
+    end
+
     def expect_output(message)
       expect(out).to receive(:puts).with(message)
     end
@@ -59,34 +64,67 @@ module RecordParser
 
       describe '#show_by_last_name_descending' do
         include_context 'file input'
-        context 'when file has only one record' do
+        context 'with only one record' do
           it_has_behavior 'shows the single record',
                           :show_by_last_name_descending
         end
-        context 'when file has two records' do
-          shared_examples 'displays records in descending order' do
-            it 'displays "Rue" and then "Chandra"' do
-              expect(out).to receive(:puts).with('Rue').ordered
-              expect(out).to receive(:puts).with('Chandra').ordered
+        context 'with two records' do
+          shared_examples 'displays records in last name descending order' do
+            it 'displays "Rue..." before "Chandra..."' do
+              expect_ordered_output('Rue', 'Chandra')
               session.show_by_last_name_descending
             end
           end
           context 'with contents "Rue\nChandra\n"' do
             let(:contents) { "Rue\nChandra\n" }
-            it_has_behavior 'displays records in descending order'
+            it_has_behavior 'displays records in last name descending order'
           end
           context 'with contents "Chandra\nRue\n"' do
             let(:contents) { "Chandra\nRue\n" }
-            it_has_behavior 'displays records in descending order'
+            it_has_behavior 'displays records in last name descending order'
           end
         end
       end
 
       describe '#show_by_gender_and_last_name' do
         include_context 'file input'
-        context 'when file has only one record' do
+        context 'with only one record' do
           it_has_behavior 'shows the single record',
                           :show_by_gender_and_last_name
+        end
+        context 'with two records, both masculine' do
+          shared_examples 'displays records in last name ascending order' do
+            it 'displays "Chandra..." before "Robson..."' do
+              expect_ordered_output('Chandra Mick M', 'Robson Marcus M')
+              session.show_by_gender_and_last_name
+            end
+          end
+          context 'out of order by last name ascending' do
+            let(:contents) { "Robson Marcus M\nChandra Mick M\n" }
+            it_has_behavior 'displays records in last name ascending order'
+          end
+          context 'already in order by last name ascending' do
+            let(:contents) { "Chandra Mick M\nRobson Marcus M\n" }
+            it_has_behavior 'displays records in last name ascending order'
+          end
+        end
+        context 'with two records, both feminine' do
+          context 'out of order by last name ascending' do
+            let(:contents) { "Rue Sandra F\nHart Gershwin F\n" }
+            it 'displays "Hart..." before "Rue..."' do
+              expect_ordered_output('Hart Gershwin F', 'Rue Sandra F')
+              session.show_by_gender_and_last_name
+            end
+          end
+        end
+        context 'with two records of different gender' do
+          context 'with masculine first' do
+            let(:contents) { "Chandra Mick M\nRue Sandra F\n" }
+            it 'displays feminine before masculine' do
+              expect_ordered_output('Rue Sandra F', 'Chandra Mick M')
+              session.show_by_gender_and_last_name
+            end
+          end
         end
       end
     end
