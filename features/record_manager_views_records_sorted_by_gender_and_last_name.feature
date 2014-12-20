@@ -14,6 +14,7 @@ Feature: record manager views records sorted by gender and last name
     When My records are sorted by gender and last name
     Then I should see
       """
+
       Sorted by gender and last name:
       Hart Gershwin F Blue 07/12/1984
       Rue Sandra F Blue 12/01/1977

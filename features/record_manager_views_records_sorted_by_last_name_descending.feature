@@ -13,6 +13,7 @@ Feature: record manager views records sorted by last name descending
     When My records are sorted by last name descending
     Then I should see
       """
+
       Sorted by last name descending:
       Rue Sandra F Blue 12/01/1977
       Hart Gershwin F Blue 07/12/1984
