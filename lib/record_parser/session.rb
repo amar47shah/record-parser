@@ -11,9 +11,7 @@ module RecordParser
     end
 
     def show_by_gender_and_last_name
-      lines.partition { |l| l.split(' ')[2] == 'F' }.each do |gender_set|
-        gender_set.sort.each { |line| puts line }
-      end
+      gender_sets.each { |set| set.sort.each { |line| puts line } }
     end
 
     def show_by_last_name_descending
@@ -21,6 +19,10 @@ module RecordParser
     end
 
   private
+
+    def gender_sets
+      lines.partition { |l| l.split(' ')[2] == 'F' }
+    end
 
     def lines
       @contents.lines
