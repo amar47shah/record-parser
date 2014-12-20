@@ -11,10 +11,12 @@ module RecordParser
     end
 
     def show_by_gender_and_last_name
+      puts 'Sorted by gender and last name:'
       gender_sets.each { |set| set.sort.each { |line| puts line } }
     end
 
     def show_by_last_name_descending
+      puts 'Sorted by last name descending:'
       lines.sort.reverse_each { |line| puts line }
     end
 

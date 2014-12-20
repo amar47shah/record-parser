@@ -61,9 +61,19 @@ module RecordParser
           it_has_behavior 'displays the record'
         end
       end
+      shared_examples 'displays heading' do |show_method, heading|
+        let(:contents) { "Record\n" }
+        it "displays '#{heading}'" do
+          expect_ordered_output(heading, 'Record')
+          session.send(show_method)
+        end
+      end
 
       describe '#show_by_last_name_descending' do
         include_context 'file input'
+        it_has_behavior 'displays heading',
+                        :show_by_last_name_descending,
+                        'Sorted by last name descending:'
         context 'with only one record' do
           it_has_behavior 'shows the single record',
                           :show_by_last_name_descending
@@ -88,6 +98,9 @@ module RecordParser
 
       describe '#show_by_gender_and_last_name' do
         include_context 'file input'
+        it_has_behavior 'displays heading',
+                        :show_by_gender_and_last_name,
+                        'Sorted by gender and last name:'
         context 'with only one record' do
           it_has_behavior 'shows the single record',
                           :show_by_gender_and_last_name
