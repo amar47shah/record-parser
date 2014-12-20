@@ -63,7 +63,11 @@ module RecordParser
       end
       shared_examples 'displays heading' do |show_method, heading|
         let(:contents) { "Record\n" }
-        it "displays '#{heading}'" do
+        it "displays a blank line before '#{heading}'" do
+          expect_ordered_output('', heading)
+          session.send(show_method)
+        end
+        it "displays '#{heading}' before the records" do
           expect_ordered_output(heading, 'Record')
           session.send(show_method)
         end
