@@ -12,11 +12,11 @@ Feature: record manager views records sorted by gender and last name
       Hart Gershwin F Blue 07/12/1984
       """
     When My records are sorted by gender and last name
-    Then I should see 'Sorted by gender and last name:'
-      And I should see
-        """
-        Hart Gershwin F Blue 07/12/1984
-        Rue Sandra F Blue 12/01/1977
-        Chandra Mick M Red 09/14/1953
-        Robson Marcus M Green 08/25/1989
-        """
+    Then I should see
+      """
+      Sorted by gender and last name:
+      Hart Gershwin F Blue 07/12/1984
+      Rue Sandra F Blue 12/01/1977
+      Chandra Mick M Red 09/14/1953
+      Robson Marcus M Green 08/25/1989
+      """
