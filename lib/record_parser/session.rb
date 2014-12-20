@@ -10,7 +10,7 @@ module RecordParser
       @contents = file.read
     end
 
-    def show
+    def show_by_last_name_descending
       @contents.lines.sort.reverse_each { |line| @out.puts line.chomp }
     end
   end

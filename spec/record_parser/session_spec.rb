@@ -4,7 +4,7 @@ module RecordParser
   shared_examples 'displays the record' do
     it 'displays the record' do
       expect_output(contents.chomp)
-      session.show
+      session.show_by_last_name_descending
     end
   end
 
@@ -12,7 +12,7 @@ module RecordParser
     it 'displays "Rue" and then "Chandra"' do
       expect(out).to receive(:puts).with('Rue').ordered
       expect(out).to receive(:puts).with('Chandra').ordered
-      session.show
+      session.show_by_last_name_descending
     end
   end
 
@@ -47,7 +47,7 @@ module RecordParser
       end
     end
 
-    describe '#show' do
+    describe '#show_by_last_name_descending' do
       before do
         allow(file).to receive(:read).and_return(contents)
         session.input(file)
