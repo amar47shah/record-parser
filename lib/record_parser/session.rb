@@ -2,40 +2,40 @@ module RecordParser
   class Session
     def initialize(out)
       @out = out
-      @out.puts 'Welcome to the Record Parser'
+      puts 'Welcome to the Record Parser'
     end
 
     def input(file)
-      @out.puts "Parsing #{file.filename}"
+      puts "Parsing #{file.filename}"
       @contents = file.read
     end
 
     def show_by_gender_and_last_name
       display_heading('Sorted by gender and last name:')
-      gender_sets.each { |set| set.sort.each { |line| puts line } }
+      display_records(Sorter.new(records).records_by_gender_and_last_name)
     end
 
     def show_by_last_name_descending
       display_heading('Sorted by last name descending:')
-      lines.sort.reverse_each { |line| puts line }
+      display_records(Sorter.new(records).records_by_last_name_descending)
     end
 
   private
 
     def display_heading(heading)
-      ['', heading].each { |line| puts line }
+      puts '', heading
     end
 
-    def gender_sets
-      lines.partition { |l| l.split(' ')[2] == 'F' }
+    def display_records(records)
+      puts *records
     end
 
-    def lines
+    def records
       @contents.lines
     end
 
-    def puts(line)
-      @out.puts line.chomp
+    def puts(*lines)
+      lines.each { |line| @out.puts line.chomp }
     end
   end
 end
