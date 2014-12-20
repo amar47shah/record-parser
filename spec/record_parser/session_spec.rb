@@ -1,21 +1,6 @@
 require 'spec_helper'
 
 module RecordParser
-  shared_examples 'displays the record' do
-    it 'displays the record' do
-      expect_output(contents.chomp)
-      session.show_by_last_name_descending
-    end
-  end
-
-  shared_examples 'displays records in descending order' do
-    it 'displays "Rue" and then "Chandra"' do
-      expect(out).to receive(:puts).with('Rue').ordered
-      expect(out).to receive(:puts).with('Chandra').ordered
-      session.show_by_last_name_descending
-    end
-  end
-
   describe Session do
     def expect_output(message)
       expect(out).to receive(:puts).with(message)
@@ -53,6 +38,12 @@ module RecordParser
         session.input(file)
       end
       context 'when file has one record' do
+        shared_examples 'displays the record' do
+          it 'displays the record' do
+            expect_output(contents.chomp)
+            session.show_by_last_name_descending
+          end
+        end
         context 'with contents "Chandra\n"' do
           let(:contents) { "Chandra\n" }
           it_has_behavior 'displays the record'
@@ -63,6 +54,13 @@ module RecordParser
         end
       end
       context 'when file has two records' do
+        shared_examples 'displays records in descending order' do
+          it 'displays "Rue" and then "Chandra"' do
+            expect(out).to receive(:puts).with('Rue').ordered
+            expect(out).to receive(:puts).with('Chandra').ordered
+            session.show_by_last_name_descending
+          end
+        end
         context 'with contents "Rue\nChandra\n"' do
           let(:contents) { "Rue\nChandra\n" }
           it_has_behavior 'displays records in descending order'
