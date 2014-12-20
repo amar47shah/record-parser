@@ -32,42 +32,61 @@ module RecordParser
       end
     end
 
-    describe '#show_by_last_name_descending' do
-      before do
-        allow(file).to receive(:read).and_return(contents)
-        session.input(file)
+    describe 'showing records' do
+      shared_context 'file input' do
+        before do
+          allow(file).to receive(:read).and_return(contents)
+          session.input(file)
+        end
       end
-      context 'when file has one record' do
+      shared_examples 'shows the single record' do |show_method|
+        let(:contents) { record }
         shared_examples 'displays the record' do
           it 'displays the record' do
-            expect_output(contents.chomp)
-            session.show_by_last_name_descending
+            expect_output(record.chomp)
+            session.send(show_method)
           end
         end
-        context 'with contents "Chandra\n"' do
-          let(:contents) { "Chandra\n" }
+        context 'with record "Chandra\n"' do
+          let(:record) { "Chandra\n" }
           it_has_behavior 'displays the record'
         end
-        context 'with contents "Rue\n"' do
-          let(:contents) { "Rue\n" }
+        context 'with record "Rue\n"' do
+          let(:record) { "Rue\n" }
           it_has_behavior 'displays the record'
         end
       end
-      context 'when file has two records' do
-        shared_examples 'displays records in descending order' do
-          it 'displays "Rue" and then "Chandra"' do
-            expect(out).to receive(:puts).with('Rue').ordered
-            expect(out).to receive(:puts).with('Chandra').ordered
-            session.show_by_last_name_descending
+
+      describe '#show_by_last_name_descending' do
+        include_context 'file input'
+        context 'when file has only one record' do
+          it_has_behavior 'shows the single record',
+                          :show_by_last_name_descending
+        end
+        context 'when file has two records' do
+          shared_examples 'displays records in descending order' do
+            it 'displays "Rue" and then "Chandra"' do
+              expect(out).to receive(:puts).with('Rue').ordered
+              expect(out).to receive(:puts).with('Chandra').ordered
+              session.show_by_last_name_descending
+            end
+          end
+          context 'with contents "Rue\nChandra\n"' do
+            let(:contents) { "Rue\nChandra\n" }
+            it_has_behavior 'displays records in descending order'
+          end
+          context 'with contents "Chandra\nRue\n"' do
+            let(:contents) { "Chandra\nRue\n" }
+            it_has_behavior 'displays records in descending order'
           end
         end
-        context 'with contents "Rue\nChandra\n"' do
-          let(:contents) { "Rue\nChandra\n" }
-          it_has_behavior 'displays records in descending order'
-        end
-        context 'with contents "Chandra\nRue\n"' do
-          let(:contents) { "Chandra\nRue\n" }
-          it_has_behavior 'displays records in descending order'
+      end
+
+      describe '#show_by_gender_and_last_name' do
+        include_context 'file input'
+        context 'when file has only one record' do
+          it_has_behavior 'shows the single record',
+                          :show_by_gender_and_last_name
         end
       end
     end

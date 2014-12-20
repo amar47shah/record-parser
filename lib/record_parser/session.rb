@@ -11,6 +11,7 @@ module RecordParser
     end
 
     def show_by_gender_and_last_name
+      @out.puts @contents.chomp
     end
 
     def show_by_last_name_descending
