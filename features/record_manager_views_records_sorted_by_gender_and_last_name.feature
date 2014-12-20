@@ -11,7 +11,7 @@ Feature: record manager views records sorted by gender and last name
       Chandra Mick M Red 09/14/1953
       Hart Gershwin F Blue 07/12/1984
       """
-    When My records are sorted
+    When I choose "Sort by gender and last name."
     Then I should see
       """
       Hart Gershwin F Blue 07/12/1984
