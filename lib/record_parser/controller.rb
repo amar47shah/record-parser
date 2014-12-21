@@ -1,5 +1,5 @@
 module RecordParser
-  class Session
+  class Controller
     def initialize(out)
       @out = out
       puts 'Welcome to the Record Parser'

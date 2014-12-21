@@ -13,8 +13,8 @@ class CustomWorld
     @fake_output ||= FakeOutput.new
   end
 
-  def session
-    @session ||= RecordParser::Session.new(fake_output)
+  def controller
+    @controller ||= RecordParser::Controller.new(fake_output)
   end
 end
 

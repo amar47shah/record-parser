@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 module RecordParser
-  describe Session do
+  describe Controller do
     def expect_output(message)
       expect(out).to receive(:puts).with(message)
     end
 
     let(:out) { double('Out') }
     let(:file) { double('File') }
-    let(:session) { Session.new(out) }
+    let(:controller) { Controller.new(out) }
 
     before do
       allow(out).to receive(:puts)
@@ -19,7 +19,7 @@ module RecordParser
     describe '#initialize' do
       it 'welcomes' do
         expect_output('Welcome to the Record Parser')
-        session
+        controller
       end
     end
 
@@ -28,7 +28,7 @@ module RecordParser
       before { allow(file).to receive(:filename).and_return(filename) }
       it 'announces the file being parsed' do
         expect_output("Parsing #{filename}")
-        session.input(file)
+        controller.input(file)
       end
     end
 
@@ -40,18 +40,18 @@ module RecordParser
 
       before do
         allow(file).to receive(:read).and_return(contents)
-        session.input(file)
+        controller.input(file)
       end
 
       shared_examples 'displays heading' do |show_method, heading|
         let(:contents) { "Record\n" }
         it "displays a blank line before '#{heading}'" do
           expect_ordered_output('', heading)
-          session.send(show_method)
+          controller.send(show_method)
         end
         it "displays '#{heading}' before the records" do
           expect_ordered_output(heading, 'Record')
-          session.send(show_method)
+          controller.send(show_method)
         end
       end
       shared_examples 'shows sorted records' do |show_method, sort_method|
@@ -65,7 +65,7 @@ module RecordParser
         end
         it 'displays the sorted records' do
           expect_ordered_output(*sorted)
-          session.send(show_method)
+          controller.send(show_method)
         end
       end
       shared_examples 'displays heading and sorted records' do |show_method, heading, sort_method|

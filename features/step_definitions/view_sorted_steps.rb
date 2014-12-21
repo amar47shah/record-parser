@@ -1,6 +1,6 @@
 Given /^I have input the records$/ do |records|
   fake_file.contents = records
-  session.input(fake_file)
+  controller.input(fake_file)
 end
 
 Given /^I have chosen to sort by gender and last name$/ do
