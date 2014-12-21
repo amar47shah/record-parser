@@ -30,12 +30,12 @@ module RecordParser
       puts *records
     end
 
-    def records
-      @contents.lines.map(&:chomp)
-    end
-
     def puts(*lines)
       lines.each { |line| @out.puts line.chomp }
+    end
+
+    def records
+      @contents.lines.map(&:chomp)
     end
   end
 end
