@@ -1,29 +1,14 @@
 require 'spec_helper'
 
 module RecordParser
-  shared_examples 'displays the record' do
-    it 'displays the record' do
-      expect_output(contents.chomp)
-      session.show
-    end
-  end
-
-  shared_examples 'displays records in descending order' do
-    it 'displays "Rue" and then "Chandra"' do
-      expect(out).to receive(:puts).with('Rue').ordered
-      expect(out).to receive(:puts).with('Chandra').ordered
-      session.show
-    end
-  end
-
   describe Session do
     def expect_output(message)
       expect(out).to receive(:puts).with(message)
     end
 
     let(:out) { double('Out') }
-    let(:session) { Session.new(out) }
     let(:file) { double('File') }
+    let(:session) { Session.new(out) }
 
     before do
       allow(out).to receive(:puts)
@@ -47,30 +32,59 @@ module RecordParser
       end
     end
 
-    describe '#show' do
+    describe 'showing records' do
+      def expect_ordered_output(first, last)
+        expect(out).to receive(:puts).with(first).ordered
+        expect(out).to receive(:puts).with(last).ordered
+      end
+
       before do
         allow(file).to receive(:read).and_return(contents)
         session.input(file)
       end
-      context 'when file has one record' do
-        context 'with contents "Chandra\n"' do
-          let(:contents) { "Chandra\n" }
-          it_has_behavior 'displays the record'
+
+      shared_examples 'displays heading' do |show_method, heading|
+        let(:contents) { "Record\n" }
+        it "displays a blank line before '#{heading}'" do
+          expect_ordered_output('', heading)
+          session.send(show_method)
         end
-        context 'with contents "Rue\n"' do
-          let(:contents) { "Rue\n" }
-          it_has_behavior 'displays the record'
+        it "displays '#{heading}' before the records" do
+          expect_ordered_output(heading, 'Record')
+          session.send(show_method)
         end
       end
-      context 'when file has two records' do
-        context 'with contents "Rue\nChandra\n"' do
-          let(:contents) { "Rue\nChandra\n" }
-          it_has_behavior 'displays records in descending order'
+      shared_examples 'shows sorted records' do |show_method, sort_method|
+        let(:contents) { "Record One\nRecord Two\n" }
+        let(:sorted) { unsorted.reverse }
+        let(:sorter) { double('Sorter') }
+        let(:unsorted) { contents.lines.map(&:chomp) }
+        before do
+          allow(Sorter).to receive(:new).with(unsorted).and_return(sorter)
+          allow(sorter).to receive(sort_method).and_return(sorted)
         end
-        context 'with contents "Chandra\nRue\n"' do
-          let(:contents) { "Chandra\nRue\n" }
-          it_has_behavior 'displays records in descending order'
+        it 'displays the sorted records' do
+          expect_ordered_output(*sorted)
+          session.send(show_method)
         end
+      end
+      shared_examples 'displays heading and sorted records' do |show_method, heading, sort_method|
+        it_has_behavior 'displays heading', show_method, heading
+        it_has_behavior 'shows sorted records', show_method, sort_method
+      end
+
+      describe '#show_by_last_name_descending' do
+        it_has_behavior 'displays heading and sorted records',
+                        :show_by_last_name_descending,
+                        'Sorted by last name descending:',
+                        :records_by_last_name_descending
+      end
+
+      describe '#show_by_gender_and_last_name' do
+        it_has_behavior 'displays heading and sorted records',
+                        :show_by_gender_and_last_name,
+                        'Sorted by gender and last name:',
+                        :records_by_gender_and_last_name
       end
     end
   end
