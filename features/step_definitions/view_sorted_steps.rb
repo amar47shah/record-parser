@@ -3,10 +3,14 @@ Given /^I have input the records$/ do |records|
   session.input(fake_file)
 end
 
-When /^My records are sorted by gender and last name$/ do
-  session.show_by_gender_and_last_name
+Given /^I have chosen to sort by gender and last name$/ do
+  pending
 end
 
-When /^My records are sorted by last name descending$/ do
-  session.show_by_last_name_descending
+Given /^I have chosen to sort by last name descending$/ do
+  pending
+end
+
+When /^I view the sorted records$/ do
+  pending
 end

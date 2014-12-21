@@ -3,6 +3,6 @@ Then /^I should see '(.*?)'$/ do |message|
 end
 
 Then /^I should see$/ do |paragraph|
-  records = paragraph.split("\n")
-  expect(fake_output.messages.each_cons(records.size)).to include(records)
+  lines = paragraph.split("\n")
+  expect(fake_output.messages.each_cons(lines.size)).to include(lines)
 end
