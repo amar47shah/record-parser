@@ -31,7 +31,7 @@ module RecordParser
     end
 
     def records
-      @contents.lines
+      @contents.lines.map(&:chomp)
     end
 
     def puts(*lines)
