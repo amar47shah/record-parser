@@ -6,16 +6,6 @@ module RecordParser
         @out = out
       end
 
-      def show_by_gender_and_last_name
-        display_heading('Sorted by gender and last name:')
-        display_records(Sorter.new(records).records_by_gender_and_last_name)
-      end
-
-      def show_by_last_name_descending
-        display_heading('Sorted by last name descending:')
-        display_records(Sorter.new(records).records_by_last_name_descending)
-      end
-
     private
 
       def display_heading(heading)

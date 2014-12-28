@@ -2,7 +2,8 @@ module RecordParser
   module Sorting
     class ByGenderAndLastName < Base
       def show
-        show_by_gender_and_last_name
+        display_heading('Sorted by gender and last name:')
+        display_records(Sorter.new(records).records_by_gender_and_last_name)
       end
     end
   end
