@@ -7,3 +7,8 @@ Given /^I have chosen to sort by last name descending:$/ do |records|
   prepare_file(records)
   @sorting = RecordParser::Sorting::ByLastNameDescending.new(file, out)
 end
+
+Given /^I have chosen to sort by birth date:$/ do |records|
+  prepare_file(records)
+  @sorting = RecordParser::Sorting::ByBirthDate.new(file, out)
+end

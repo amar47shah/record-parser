@@ -6,5 +6,6 @@ module RecordParser::Sorting
   case ARGV.shift
   when 'last-name-descending' then ByLastNameDescending
   when 'gender-and-last-name' then ByGenderAndLastName
+  when 'birth-date'           then ByBirthDate
   end.new(ARGF, $stdout).show
 end
