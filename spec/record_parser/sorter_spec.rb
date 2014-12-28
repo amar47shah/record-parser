@@ -18,6 +18,16 @@ module RecordParser
         it_has_behavior 'returns the record'
       end
     end
+    shared_examples 'returns the two in correct order' do
+      context 'when already in order' do
+        let(:records) { in_correct_order }
+        it { is_expected.to eq(in_correct_order) }
+      end
+      context 'when switched' do
+        let(:records) { in_correct_order.reverse }
+        it { is_expected.to eq(in_correct_order) }
+      end
+    end
 
     describe '#by_gender_and_last_name' do
       subject { sorter.by_gender_and_last_name }
@@ -25,29 +35,16 @@ module RecordParser
         it_has_behavior 'returns the single record'
       end
       context 'with two records, both masculine' do
-        shared_examples 'returns records in last name ascending order' do
-          it { is_expected.to eq(['Chandra Mick M', 'Robson Marcus M']) }
-        end
-        context 'out of order by last name ascending' do
-          let(:records) { ['Robson Marcus M', 'Chandra Mick M'] }
-          it_has_behavior 'returns records in last name ascending order'
-        end
-        context 'already in order by last name ascending' do
-          let(:records) { ['Chandra Mick M', 'Robson Marcus M'] }
-          it_has_behavior 'returns records in last name ascending order'
-        end
+        let(:in_correct_order) { ['Chandra Mick M', 'Robson Marcus M'] }
+        it_has_behavior 'returns the two in correct order'
       end
       context 'with two records, both feminine' do
-        context 'out of order by last name ascending' do
-          let(:records) { ['Rue Sandra F', 'Hart Gershwin F'] }
-          it { is_expected.to eq(['Hart Gershwin F', 'Rue Sandra F']) }
-        end
+        let(:in_correct_order) { ['Hart Gershwin F', 'Rue Sandra F'] }
+        it_has_behavior 'returns the two in correct order'
       end
       context 'with two records of different gender' do
-        context 'with masculine first' do
-          let(:records) { ['Chandra Mick M', 'Rue Sandra F'] }
-          it { is_expected.to eq(['Rue Sandra F', 'Chandra Mick M']) }
-        end
+        let(:in_correct_order) { ['Rue Sandra F', 'Chandra Mick M'] }
+        it_has_behavior 'returns the two in correct order'
       end
     end
 
@@ -57,17 +54,8 @@ module RecordParser
         it_has_behavior 'returns the single record'
       end
       context 'with two records' do
-        shared_examples 'returns records in last name descending order' do
-          it { is_expected.to eq(['Rue', 'Chandra']) }
-        end
-        context 'with "Rue" followed by "Chandra"' do
-          let(:records) { ['Rue', 'Chandra'] }
-          it_has_behavior 'returns records in last name descending order'
-        end
-        context 'with "Chandra" followed by "Rue"' do
-          let(:records) { ['Chandra', 'Rue'] }
-          it_has_behavior 'returns records in last name descending order'
-        end
+        let(:in_correct_order) { ['Rue', 'Chandra'] }
+        it_has_behavior 'returns the two in correct order'
       end
     end
 
@@ -77,16 +65,6 @@ module RecordParser
         it_has_behavior 'returns the single record'
       end
       context 'with two records' do
-        shared_examples 'returns the two in correct order' do
-          context 'when already in order' do
-            let(:records) { in_correct_order }
-            it { is_expected.to eq(in_correct_order) }
-          end
-          context 'when switched' do
-            let(:records) { in_correct_order.reverse }
-            it { is_expected.to eq(in_correct_order) }
-          end
-        end
         context 'with different birth years' do
           let(:in_correct_order) do
             ['Chandra Mick M Red 9/14/1953',
