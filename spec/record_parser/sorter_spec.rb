@@ -60,11 +60,11 @@ module RecordParser
         shared_examples 'returns records in last name descending order' do
           it { is_expected.to eq(['Rue', 'Chandra']) }
         end
-        context 'with records "RueChandra"' do
+        context 'with "Rue" followed by "Chandra"' do
           let(:records) { ['Rue', 'Chandra'] }
           it_has_behavior 'returns records in last name descending order'
         end
-        context 'with records "ChandraRue"' do
+        context 'with "Chandra" followed by "Rue"' do
           let(:records) { ['Chandra', 'Rue'] }
           it_has_behavior 'returns records in last name descending order'
         end
