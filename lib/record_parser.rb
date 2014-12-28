@@ -1,1 +1,2 @@
-require 'record_parser/session'
+require 'record_parser/sorter'
+require 'record_parser/sorting'

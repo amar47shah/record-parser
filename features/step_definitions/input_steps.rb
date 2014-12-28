@@ -1,11 +1,14 @@
-Given /^I have not started a session$/ do
+Given /^I have chosen to sort by gender and last name:$/ do |records|
+  prepare_file(records)
+  @sorting = RecordParser::Sorting::ByGenderAndLastName.new(file, out)
 end
 
-When /^I start a session$/ do
-  session
+Given /^I have chosen to sort by last name descending:$/ do |records|
+  prepare_file(records)
+  @sorting = RecordParser::Sorting::ByLastNameDescending.new(file, out)
 end
 
-When /^I input a file called 'data\/records\.txt'$/ do
-  fake_file.filename = 'data/records.txt'
-  session.input(fake_file)
+Given /^I have chosen to sort by birth date:$/ do |records|
+  prepare_file(records)
+  @sorting = RecordParser::Sorting::ByBirthDate.new(file, out)
 end
