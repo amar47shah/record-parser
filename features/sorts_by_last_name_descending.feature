@@ -14,8 +14,6 @@ Feature: Record manager sorts by last name descending
     When my records are sorted
     Then I should see
       """
-
-      Sorted by last name descending:
       Rue Sandra F Blue 12/01/1977
       Hart Gershwin F Blue 07/12/1984
       Chandra Mick M Red 09/14/1953

@@ -8,10 +8,6 @@ module RecordParser
 
     private
 
-      def display_heading(heading)
-        puts '', heading
-      end
-
       def display_records(records)
         puts *records
       end
