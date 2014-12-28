@@ -5,8 +5,6 @@ World do
 end
 
 class CustomWorld
-  attr_accessor :sorting
-
   def file
     @file ||= FakeFile.new
   end

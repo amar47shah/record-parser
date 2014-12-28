@@ -1,3 +1,3 @@
 When /^my records are sorted$/ do
-  sorting.show
+  @sorting.show
 end
