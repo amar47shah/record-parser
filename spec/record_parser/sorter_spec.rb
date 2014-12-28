@@ -19,8 +19,8 @@ module RecordParser
       end
     end
 
-    describe '#records_by_gender_and_last_name' do
-      subject { sorter.records_by_gender_and_last_name }
+    describe '#by_gender_and_last_name' do
+      subject { sorter.by_gender_and_last_name }
       context 'with only one record' do
         it_has_behavior 'returns the single record'
       end
@@ -51,8 +51,8 @@ module RecordParser
       end
     end
 
-    describe '#records_by_last_name_descending' do
-      subject { sorter.records_by_last_name_descending }
+    describe '#by_last_name_descending' do
+      subject { sorter.by_last_name_descending }
       context 'with only one record' do
         it_has_behavior 'returns the single record'
       end
