@@ -5,8 +5,7 @@ Feature: Record manager sorts by last name descending
   So that I can make sense of my data
 
   Scenario: Sort by last name descending
-    Given I have chosen to sort by last name descending
-      And I have input the records
+    Given I have chosen to sort by last name descending:
         """
         Chandra Mick M Red 09/14/1953
         Rue Sandra F Blue 12/01/1977

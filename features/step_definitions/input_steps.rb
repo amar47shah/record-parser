@@ -1,12 +1,11 @@
-Given /^I have chosen to sort by gender and last name$/ do
-  sorting = RecordParser::Sorting::ByGenderAndLastName.new(fake_output)
+Given /^I have chosen to sort by gender and last name:$/ do |records|
+  prepare_fake_file(records)
+  sorting = RecordParser::Sorting::ByGenderAndLastName.new(fake_output,
+                                                           fake_file)
 end
 
-Given /^I have chosen to sort by last name descending$/ do
-  sorting = RecordParser::Sorting::ByLastNameDescending.new(fake_output)
-end
-
-Given /^I have input the records$/ do |records|
-  fake_file.contents = records
-  sorting.input(fake_file)
+Given /^I have chosen to sort by last name descending:$/ do |records|
+  prepare_fake_file(records)
+  sorting = RecordParser::Sorting::ByLastNameDescending.new(fake_output,
+                                                            fake_file)
 end

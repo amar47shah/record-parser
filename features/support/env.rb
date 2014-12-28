@@ -14,6 +14,10 @@ class CustomWorld
   def fake_output
     @fake_output ||= FakeOutput.new
   end
+
+  def prepare_fake_file(records)
+    fake_file.contents = records
+  end
 end
 
 class FakeFile

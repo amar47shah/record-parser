@@ -5,8 +5,7 @@ Feature: Record manager sorts by gender and last name
   So that I can make sense of my data
 
   Scenario: Sort by gender and last name
-    Given I have chosen to sort by gender and last name
-      And I have input the records
+    Given I have chosen to sort by gender and last name:
         """
         Robson Marcus M Green 08/25/1989
         Rue Sandra F Blue 12/01/1977
