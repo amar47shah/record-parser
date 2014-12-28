@@ -25,7 +25,7 @@ module RecordParser
     end
 
     def gender_sets
-      @records.partition { |l| l.split(' ')[2] == 'F' }
+      @records.partition { |record| record.split(' ')[2] == 'F' }
     end
   end
 end
