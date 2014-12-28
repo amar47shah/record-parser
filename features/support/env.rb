@@ -7,25 +7,24 @@ end
 class CustomWorld
   attr_accessor :sorting
 
-  def fake_file
-    @fake_file ||= FakeFile.new
+  def file
+    @file ||= FakeFile.new
   end
 
-  def fake_output
-    @fake_output ||= FakeOutput.new
+  def out
+    @out ||= FakeOutput.new
   end
 
-  def prepare_fake_file(records)
-    fake_file.contents = records
+  def prepare_file(records)
+    file.records = records
   end
 end
 
 class FakeFile
-  attr_accessor :filename
-  attr_writer :contents
+  attr_writer :records
 
   def read
-    @contents
+    @records
   end
 end
 
