@@ -24,8 +24,12 @@ module RecordParser
       Date.strptime(record.split(' ').last, '%m/%d/%Y')
     end
 
+    def gender(record)
+      record.split(' ')[2]
+    end
+
     def gender_sets
-      @records.partition { |record| record.split(' ')[2] == 'F' }
+      @records.partition { |record| gender(record) == 'F' }
     end
   end
 end
