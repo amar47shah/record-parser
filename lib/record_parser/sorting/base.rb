@@ -8,7 +8,7 @@ module RecordParser
 
     private
 
-      def display_records(records)
+      def display(records)
         puts *records
       end
 
