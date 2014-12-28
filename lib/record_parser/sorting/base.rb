@@ -1,14 +1,9 @@
 module RecordParser
   module Sorting
     class Base
-      def initialize(out)
-        @out = out
-        puts 'Welcome to the Record Parser'
-      end
-
-      def input(file)
-        puts "Parsing #{file.filename}"
+      def initialize(file, out)
         @contents = file.read
+        @out = out
       end
 
       def show_by_gender_and_last_name

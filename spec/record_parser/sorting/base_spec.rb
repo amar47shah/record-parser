@@ -3,45 +3,21 @@ require 'spec_helper'
 module RecordParser
   module Sorting
     describe Base do
-      def expect_output(message)
-        expect(out).to receive(:puts).with(message)
-      end
-
       let(:out) { double('Out') }
       let(:file) { double('File') }
-      let(:sorting) { Base.new(out) }
+      let(:sorting) { Base.new(file, out) }
 
       before do
         allow(out).to receive(:puts)
         allow(file).to receive(:read)
         allow(file).to receive(:filename)
-      end
-
-      describe '#initialize' do
-        it 'welcomes' do
-          expect_output('Welcome to the Record Parser')
-          sorting
-        end
-      end
-
-      describe '#input' do
-        let(:filename) { 'data/records.txt' }
-        before { allow(file).to receive(:filename).and_return(filename) }
-        it 'announces the file being parsed' do
-          expect_output("Parsing #{filename}")
-          sorting.input(file)
-        end
+        allow(file).to receive(:read).and_return(contents)
       end
 
       describe 'showing records' do
         def expect_ordered_output(first, last)
           expect(out).to receive(:puts).with(first).ordered
           expect(out).to receive(:puts).with(last).ordered
-        end
-
-        before do
-          allow(file).to receive(:read).and_return(contents)
-          sorting.input(file)
         end
 
         shared_examples 'displays heading' do |show_method, heading|
