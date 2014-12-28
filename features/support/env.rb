@@ -5,16 +5,14 @@ World do
 end
 
 class CustomWorld
+  attr_accessor :sorting
+
   def fake_file
     @fake_file ||= FakeFile.new
   end
 
   def fake_output
     @fake_output ||= FakeOutput.new
-  end
-
-  def sorting
-    @sorting ||= RecordParser::Controller.new(fake_output)
   end
 end
 
