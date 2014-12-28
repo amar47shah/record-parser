@@ -4,11 +4,11 @@ module RecordParser
       @records = records
     end
 
-    def records_by_gender_and_last_name
+    def by_gender_and_last_name
       gender_sets.flat_map(&:sort)
     end
 
-    def records_by_last_name_descending
+    def by_last_name_descending
       @records.sort.reverse
     end
 

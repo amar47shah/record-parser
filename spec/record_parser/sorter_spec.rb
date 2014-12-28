@@ -19,8 +19,8 @@ module RecordParser
       end
     end
 
-    describe '#records_by_gender_and_last_name' do
-      subject { sorter.records_by_gender_and_last_name }
+    describe '#by_gender_and_last_name' do
+      subject { sorter.by_gender_and_last_name }
       context 'with only one record' do
         it_has_behavior 'returns the single record'
       end
@@ -51,8 +51,8 @@ module RecordParser
       end
     end
 
-    describe '#records_by_last_name_descending' do
-      subject { sorter.records_by_last_name_descending }
+    describe '#by_last_name_descending' do
+      subject { sorter.by_last_name_descending }
       context 'with only one record' do
         it_has_behavior 'returns the single record'
       end
@@ -60,11 +60,11 @@ module RecordParser
         shared_examples 'returns records in last name descending order' do
           it { is_expected.to eq(['Rue', 'Chandra']) }
         end
-        context 'with records "RueChandra"' do
+        context 'with "Rue" followed by "Chandra"' do
           let(:records) { ['Rue', 'Chandra'] }
           it_has_behavior 'returns records in last name descending order'
         end
-        context 'with records "ChandraRue"' do
+        context 'with "Chandra" followed by "Rue"' do
           let(:records) { ['Chandra', 'Rue'] }
           it_has_behavior 'returns records in last name descending order'
         end
