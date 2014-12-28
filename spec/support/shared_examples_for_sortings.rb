@@ -3,12 +3,12 @@ shared_examples 'shows sorted records' do
   let(:file) { double('File') }
   let(:sorting) { sorting_class.new(file, out) }
   let(:contents) { "Record One\nRecord Two\n" }
-  let(:sorted) { unsorted.reverse }
   let(:unsorted) { contents.lines.map(&:chomp) }
+  let(:sorted) { unsorted.reverse }
   before do
-    sorter = double('Sorter')
     allow(out).to receive(:puts)
     allow(file).to receive(:read).and_return(contents)
+    sorter = double('Sorter')
     allow(RecordParser::Sorter).to receive(:new).
                                    with(unsorted).
                                    and_return(sorter)
