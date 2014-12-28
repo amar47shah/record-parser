@@ -2,7 +2,9 @@
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 require 'record_parser'
 
-session = RecordParser::Session.new($stdout)
-session.input(ARGF)
-session.show_by_last_name_descending
-session.show_by_gender_and_last_name
+module RecordParser::Sorting
+  case ARGV.shift
+  when 'last-name-descending' then ByLastNameDescending
+  when 'gender-and-last-name' then ByGenderAndLastName
+  end.new(ARGF, $stdout).show
+end
