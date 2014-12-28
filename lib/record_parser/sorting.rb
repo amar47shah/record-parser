@@ -1,5 +1,5 @@
 module RecordParser
-  class Controller
+  class Sorting
     def initialize(out)
       @out = out
       puts 'Welcome to the Record Parser'

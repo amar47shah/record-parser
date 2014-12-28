@@ -3,7 +3,7 @@ end
 
 When /^I input a file called 'data\/records\.txt'$/ do
   fake_file.filename = 'data/records.txt'
-  controller.input(fake_file)
+  sorting.input(fake_file)
 end
 
 When /^I choose to sort by gender and last name$/ do

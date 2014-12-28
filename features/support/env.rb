@@ -13,8 +13,8 @@ class CustomWorld
     @fake_output ||= FakeOutput.new
   end
 
-  def controller
-    @controller ||= RecordParser::Controller.new(fake_output)
+  def sorting
+    @sorting ||= RecordParser::Controller.new(fake_output)
   end
 end
 

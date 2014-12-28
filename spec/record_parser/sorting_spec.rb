@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 module RecordParser
-  describe Controller do
+  describe Sorting do
     def expect_output(message)
       expect(out).to receive(:puts).with(message)
     end
 
     let(:out) { double('Out') }
     let(:file) { double('File') }
-    let(:controller) { Controller.new(out) }
+    let(:controller) { Sorting.new(out) }
 
     before do
       allow(out).to receive(:puts)
