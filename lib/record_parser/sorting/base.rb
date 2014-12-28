@@ -8,11 +8,7 @@ module RecordParser
 
     private
 
-      def display(records)
-        puts *records
-      end
-
-      def puts(*lines)
+      def display(lines)
         lines.each { |line| @out.puts line.chomp }
       end
 
