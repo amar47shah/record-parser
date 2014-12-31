@@ -7,7 +7,7 @@ module RecordParser
     end
 
     def by_birth_date
-      @records.sort { |a, b| birth_date(a) <=> birth_date(b) }
+      @records.sort_by { |record| birth_date(record) }
     end
 
     def by_gender_and_last_name

@@ -9,12 +9,12 @@ module RecordParser
       shared_examples 'returns the record' do
         it { is_expected.to eq([record]) }
       end
-      context 'with record "Chandra"' do
-        let(:record) { "Chandra" }
+      context 'with record "Chandra Mick M Red 9/14/1953"' do
+        let(:record) { 'Chandra Mick M Red 9/14/1953' }
         it_has_behavior 'returns the record'
       end
-      context 'with record "Rue"' do
-        let(:record) { "Rue" }
+      context 'with record "Rue Sandra F Blue 12/1/1977"' do
+        let(:record) { 'Rue Sandra F Blue 12/1/1977' }
         it_has_behavior 'returns the record'
       end
     end
