@@ -8,7 +8,7 @@ Feature: Record manager sorts by birth date
     Given I have chosen to sort by birth date:
       """
       Baczyk Bran M Yellow 9/14/1984
-      al-Nouri Sami F Black 12/1/1984
+      Alnouri Sami F Black 12/1/1984
       Hart Gershwin F Blue 7/14/1984
       Chandra Mick M Red 9/14/1953
       Robson Fenley F Purple 7/4/1984
@@ -20,5 +20,5 @@ Feature: Record manager sorts by birth date
       Robson Fenley F Purple 7/4/1984
       Hart Gershwin F Blue 7/14/1984
       Baczyk Bran M Yellow 9/14/1984
-      al-Nouri Sami F Black 12/1/1984
+      Alnouri Sami F Black 12/1/1984
       """

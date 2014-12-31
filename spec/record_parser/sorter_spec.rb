@@ -91,7 +91,7 @@ module RecordParser
             context 'and different birth day of month' do
               let(:in_correct_order) do
                 ['Hart Gershwin F Blue 7/14/1984',
-                 'al-Nouri Sami F Black 12/1/1984']
+                 'Alnouri Sami F Black 12/1/1984']
               end
               it_has_behavior 'returns the two in correct order'
             end
