@@ -33,5 +33,6 @@ class FakeOutput
 
   def puts(message)
     messages << "#{message}"
+    nil
   end
 end
