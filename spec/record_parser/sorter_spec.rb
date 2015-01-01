@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'support/date_helper'
 
 module RecordParser
   describe Sorter do
@@ -83,12 +84,9 @@ module RecordParser
         it_has_behavior 'returns the single record'
       end
       context 'with two records' do
-        def date(string)
-          Date.strptime(string, '%m/%d/%Y')
-        end
         before do
-          prepare(first , { birth_date: date('9/14/1953') })
-          prepare(second, { birth_date: date('9/14/1984') })
+          prepare(first , { birth_date: date_from('9/14/1953') })
+          prepare(second, { birth_date: date_from('9/14/1984') })
         end
         it_has_behavior 'returns the two in correct order'
       end

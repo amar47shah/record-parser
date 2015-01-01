@@ -1,12 +1,10 @@
 require 'spec_helper'
+require 'support/date_helper'
 
 module RecordParser
   describe Record do
     describe '#birth_date' do
       subject { record.birth_date }
-      def date_from(string)
-        Date.strptime(string, '%m/%d/%Y')
-      end
       context 'when "9/14/1953"' do
         let(:record) { Record.new('Chandra Mick M Red 9/14/1953') }
         it { is_expected.to eq(date_from('9/14/1953')) }
