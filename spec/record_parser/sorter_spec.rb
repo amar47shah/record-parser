@@ -4,21 +4,22 @@ module RecordParser
   describe Sorter do
     let(:sorter) { Sorter.new(records) }
 
-    shared_examples 'returns the single record' do
-      let(:records) { [record] }
-      shared_examples 'returns the record' do
-        it { is_expected.to eq([record]) }
-      end
-      context 'with record "Chandra Mick M Red 9/14/1953"' do
-        let(:record) { 'Chandra Mick M Red 9/14/1953' }
-        it_has_behavior 'returns the record'
-      end
-      context 'with record "Rue Sandra F Blue 12/1/1977"' do
-        let(:record) { 'Rue Sandra F Blue 12/1/1977' }
-        it_has_behavior 'returns the record'
+    def prepare(object, messages_and_values)
+      messages_and_values.each do |message, value|
+        allow(object).to receive(message).and_return(value)
       end
     end
+
+    shared_examples 'returns the single record' do
+      let(:only_record) { double('OnlyRecord') }
+      let(:records) { [only_record] }
+      before { messages.each { |m| allow(only_record).to receive(m) } }
+      it { is_expected.to eq([only_record]) }
+    end
     shared_examples 'returns the two in correct order' do
+      let(:first) { double('FirstRecord') }
+      let(:second) { double('SecondRecord') }
+      let(:in_correct_order) { [first, second] }
       context 'when already in order' do
         let(:records) { in_correct_order }
         it { is_expected.to eq(in_correct_order) }
@@ -32,29 +33,45 @@ module RecordParser
     describe '#by_gender_and_last_name' do
       subject { sorter.by_gender_and_last_name }
       context 'with only one record' do
+        let(:messages) { %i(gender last_name) }
         it_has_behavior 'returns the single record'
       end
-      context 'with two records, both masculine' do
-        let(:in_correct_order) { ['Chandra Mick M', 'Robson Marcus M'] }
-        it_has_behavior 'returns the two in correct order'
-      end
-      context 'with two records, both feminine' do
-        let(:in_correct_order) { ['Hart Gershwin F', 'Rue Sandra F'] }
-        it_has_behavior 'returns the two in correct order'
-      end
-      context 'with two records of different gender' do
-        let(:in_correct_order) { ['Rue Sandra F', 'Chandra Mick M'] }
-        it_has_behavior 'returns the two in correct order'
+      context 'with two records' do
+        context 'when both masculine' do
+          before do
+            prepare(first , { gender: 'M', last_name: 'Chandra' })
+            prepare(second, { gender: 'M', last_name: 'Robson'  })
+          end
+          it_has_behavior 'returns the two in correct order'
+        end
+        context 'when both feminine' do
+          before do
+            prepare(first , { gender: 'F', last_name: 'Hart' })
+            prepare(second, { gender: 'F', last_name: 'Rue'  })
+          end
+          it_has_behavior 'returns the two in correct order'
+        end
+        context 'when of different gender' do
+          before do
+            prepare(first , { gender: 'F', last_name: 'Rue'     })
+            prepare(second, { gender: 'M', last_name: 'Chandra' })
+          end
+          it_has_behavior 'returns the two in correct order'
+        end
       end
     end
 
     describe '#by_last_name_descending' do
       subject { sorter.by_last_name_descending }
       context 'with only one record' do
+        let(:messages) { %i(last_name) }
         it_has_behavior 'returns the single record'
       end
       context 'with two records' do
-        let(:in_correct_order) { ['Rue', 'Chandra'] }
+        before do
+          prepare(first , { last_name: 'Rue'     })
+          prepare(second, { last_name: 'Chandra' })
+        end
         it_has_behavior 'returns the two in correct order'
       end
     end
@@ -62,56 +79,18 @@ module RecordParser
     describe '#by_birth_date' do
       subject { sorter.by_birth_date }
       context 'with only one record' do
+        let(:messages) { %i(birth_date) }
         it_has_behavior 'returns the single record'
       end
       context 'with two records' do
-        context 'with different birth years' do
-          let(:in_correct_order) do
-            ['Chandra Mick M Red 9/14/1953',
-             'Baczyk Bran M Yellow 9/14/1984']
-          end
-          it_has_behavior 'returns the two in correct order'
+        def date(string)
+          Date.strptime(string, '%m/%d/%Y')
         end
-        context 'with the same birth year' do
-          context 'and same birth month' do
-            let(:in_correct_order) do
-              ['Robson Fenley F Purple 7/4/1984',
-               'Hart Gershwin F Blue 7/14/1984']
-            end
-            it_has_behavior 'returns the two in correct order'
-          end
-          context 'and different birth months' do
-            context 'and same birth day of month' do
-              let(:in_correct_order) do
-                ['Hart Gershwin F Blue 7/14/1984',
-                 'Baczyk Bran M Yellow 9/14/1984']
-              end
-              it_has_behavior 'returns the two in correct order'
-            end
-            context 'and different birth day of month' do
-              let(:in_correct_order) do
-                ['Hart Gershwin F Blue 7/14/1984',
-                 'Alnouri Sami F Black 12/1/1984']
-              end
-              it_has_behavior 'returns the two in correct order'
-            end
-          end
+        before do
+          prepare(first , { birth_date: date('9/14/1953') })
+          prepare(second, { birth_date: date('9/14/1984') })
         end
-      end
-      context 'with three records' do
-        let(:in_correct_order) do
-          ['Chandra Mick M Red 9/14/1953',
-           'Robson Fenley F Purple 7/4/1984',
-           'Hart Gershwin F Blue 7/14/1984']
-        end
-        context 'out of order' do
-          let(:records) do
-          ['Robson Fenley F Purple 7/4/1984',
-           'Chandra Mick M Red 9/14/1953',
-           'Hart Gershwin F Blue 7/14/1984']
-          end
-          it { is_expected.to eq(in_correct_order) }
-        end
+        it_has_behavior 'returns the two in correct order'
       end
     end
   end
