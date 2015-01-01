@@ -1,3 +1,5 @@
+require 'date'
+
 module RecordParser
   class Record
     def initialize(line)
