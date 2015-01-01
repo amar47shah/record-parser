@@ -5,9 +5,8 @@ module RecordParser
   module Sorting
     describe ByLastNameDescending do
       describe '#show' do
-        it_has_behavior 'shows sorted records' do
+        it_has_behavior 'shows sorted records', :by_last_name_descending do
           let(:sorting_class) { ByLastNameDescending }
-          let(:sort_method) { :by_last_name_descending }
         end
       end
     end

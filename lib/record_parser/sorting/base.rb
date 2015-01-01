@@ -8,12 +8,12 @@ module RecordParser
 
     private
 
-      def display(lines)
-        lines.each { |line| @out.puts line.chomp }
+      def display(records)
+        records.each { |record| @out.puts record }
       end
 
       def records
-        @contents.lines.map(&:chomp)
+        @contents.lines.map { |line| Record.new(line.chomp) }
       end
     end
   end
