@@ -1,4 +1,4 @@
-shared_examples 'shows sorted records' do
+shared_examples 'shows sorted records' do |sort_method|
   let(:out) { double('Out') }
   let(:file) { double('File') }
   let(:sorting) { sorting_class.new(file, out) }
@@ -20,7 +20,7 @@ shared_examples 'shows sorted records' do
                                    and_return(sorter)
     allow(sorter).to receive(sort_method).and_return(sorted)
   end
-  it 'displays the sorted records' do
+  it "displays the records sorted #{"#{sort_method}".gsub('_', ' ')}" do
     expect(out).to receive(:puts).with(sorted.first).ordered
     expect(out).to receive(:puts).with(sorted.last).ordered
     sorting.show

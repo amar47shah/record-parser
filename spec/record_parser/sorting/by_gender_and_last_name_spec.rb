@@ -5,9 +5,8 @@ module RecordParser
   module Sorting
     describe ByGenderAndLastName do
       describe '#show' do
-        it_has_behavior 'shows sorted records' do
+        it_has_behavior 'shows sorted records', :by_gender_and_last_name do
           let(:sorting_class) { ByGenderAndLastName }
-          let(:sort_method) { :by_gender_and_last_name }
         end
       end
     end

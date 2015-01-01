@@ -5,9 +5,8 @@ module RecordParser
   module Sorting
     describe ByBirthDate do
       describe '#show' do
-        it_has_behavior 'shows sorted records' do
+        it_has_behavior 'shows sorted records', :by_birth_date do
           let(:sorting_class) { ByBirthDate }
-          let(:sort_method) { :by_birth_date }
         end
       end
     end
