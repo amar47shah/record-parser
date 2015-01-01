@@ -1,6 +1,8 @@
 module RecordParser
   class Application
     class << self
+      undef_method :new
+
       def run(instruction, file, out)
         @instruction = instruction
         @out = out

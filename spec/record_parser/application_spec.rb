@@ -2,6 +2,11 @@ require 'spec_helper'
 
 module RecordParser
   describe Application do
+    describe '::new' do
+      subject { -> { Application.new } }
+      it { is_expected.to raise_error(NoMethodError) }
+    end
+
     describe '::run' do
       let(:out) { double('Out') }
 
