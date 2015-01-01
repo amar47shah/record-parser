@@ -15,15 +15,15 @@ module RecordParser
       end
     end
 
-    describe '#gender' do
-      subject { record.gender }
+    describe '#feminine?' do
+      subject { record.feminine? }
       context 'when feminine' do
         let(:record) { Record.new('Hart Gershwin F Blue 7/14/1984') }
-        it { is_expected.to eq('F') }
+        it { is_expected.to be_truthy }
       end
       context 'when masculine' do
         let(:record) { Record.new('Robson Marcus M Green 8/25/1989') }
-        it { is_expected.to eq('M') }
+        it { is_expected.to be_falsey }
       end
     end
 

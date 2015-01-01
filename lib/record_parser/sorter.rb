@@ -21,7 +21,7 @@ module RecordParser
   private
 
     def gender_sets
-      @records.partition { |record| record.gender == 'F' }
+      @records.partition(&:feminine?)
     end
   end
 end
