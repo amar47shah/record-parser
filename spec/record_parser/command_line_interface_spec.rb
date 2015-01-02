@@ -84,8 +84,10 @@ module RecordParser
           shared_examples 'handles unreadable file' do |bad_filename|
             let(:instruction) { 'birth-date' }
             before do
-              allow(file).to receive(:read).and_raise(Errno::ENOENT)
-              allow(file).to receive(:filename).and_return(bad_filename)
+              allow(file).to receive(:read).and_raise(
+                Errno::ENOENT,
+                "No such file or directory @ rb_sysopen - #{bad_filename}"
+              )
             end
             context "when '#{bad_filename}" do
               it_has_behavior 'does not raise an error'

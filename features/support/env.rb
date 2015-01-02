@@ -17,12 +17,8 @@ end
 class FakeFile
   attr_writer :bad, :contents, :name
 
-  def filename
-    @name
-  end
-
   def read
-    raise Errno::ENOENT if @bad
+    fail Errno::ENOENT, "@ rb_sysopen - #{@name}" if @bad
     @contents
   end
 end
