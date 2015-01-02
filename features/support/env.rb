@@ -12,17 +12,13 @@ class CustomWorld
   def out
     @out ||= FakeOutput.new
   end
-
-  def prepare_file(records)
-    file.records = records
-  end
 end
 
 class FakeFile
-  attr_writer :records
+  attr_writer :contents
 
   def read
-    @records
+    @contents
   end
 end
 
