@@ -12,17 +12,18 @@ class CustomWorld
   def out
     @out ||= FakeOutput.new
   end
-
-  def prepare_file(records)
-    file.records = records
-  end
 end
 
 class FakeFile
-  attr_writer :records
+  attr_writer :bad, :contents, :name
+
+  def filename
+    @name
+  end
 
   def read
-    @records
+    raise Errno::ENOENT if @bad
+    @contents
   end
 end
 
@@ -32,6 +33,6 @@ class FakeOutput
   end
 
   def puts(message)
-    messages << message
+    messages << "#{message}" && nil
   end
 end

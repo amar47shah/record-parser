@@ -1,13 +1,23 @@
 require 'spec_helper'
 require 'support/shared_examples_for_sortings'
+require 'support/helpers/stub_helper'
 
 module RecordParser
   module Sorting
     describe ByLastNameDescending do
-      describe '#show' do
-        it_has_behavior 'shows sorted records' do
-          let(:sorting_class) { ByLastNameDescending }
-          let(:sort_method) { :by_last_name_descending }
+      let(:sorting) { ByLastNameDescending.new(records) }
+      describe '#sort' do
+        subject { sorting.sort }
+        context 'with only one record' do
+          let(:messages) { %i(last_name) }
+          it_has_behavior 'returns the single record'
+        end
+        context 'with two records' do
+          before do
+            prepare(first , { last_name: 'Rue'     })
+            prepare(second, { last_name: 'Chandra' })
+          end
+          it_has_behavior 'returns the two in correct order'
         end
       end
     end

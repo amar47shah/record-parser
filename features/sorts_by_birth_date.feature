@@ -4,21 +4,62 @@ Feature: Record manager sorts by birth date
   I want to sort records by birth date
   So that I can make sense of my data
 
-  Scenario: Sort by birth date
-    Given I have chosen to sort by birth date:
+  Scenario: Pipe-delimited file
+    Given I have chosen to sort by birth date
+      And my file contains
+      """
+      Baczyk | Bran | M | Yellow | 9/14/1984
+      Alnouri | Sami | F | Black | 12/1/1984
+      Hart | Gershwin | F | Blue | 7/14/1984
+      Chandra | Mick | M | Red | 9/14/1953
+      Robson | Fenley | F | Purple | 7/4/1984
+      """
+    When I run the application
+    Then I should see
+      """
+      Chandra | Mick | M | Red | 9/14/1953
+      Robson | Fenley | F | Purple | 7/4/1984
+      Hart | Gershwin | F | Blue | 7/14/1984
+      Baczyk | Bran | M | Yellow | 9/14/1984
+      Alnouri | Sami | F | Black | 12/1/1984
+      """
+
+  Scenario: Comma-delimited file
+    Given I have chosen to sort by birth date
+      And my file contains
+      """
+      Baczyk, Bran, M, Yellow, 9/14/1984
+      Alnouri, Sami, F, Black, 12/1/1984
+      Hart, Gershwin, F, Blue, 7/14/1984
+      Chandra, Mick, M, Red, 9/14/1953
+      Robson, Fenley, F, Purple, 7/4/1984
+      """
+    When I run the application
+    Then I should see
+      """
+      Chandra, Mick, M, Red, 9/14/1953
+      Robson, Fenley, F, Purple, 7/4/1984
+      Hart, Gershwin, F, Blue, 7/14/1984
+      Baczyk, Bran, M, Yellow, 9/14/1984
+      Alnouri, Sami, F, Black, 12/1/1984
+      """
+
+  Scenario: Space-delimited file
+    Given I have chosen to sort by birth date
+      And my file contains
       """
       Baczyk Bran M Yellow 9/14/1984
-      al-Nouri Sami F Black 12/1/1984
+      Alnouri Sami F Black 12/1/1984
       Hart Gershwin F Blue 7/14/1984
       Chandra Mick M Red 9/14/1953
       Robson Fenley F Purple 7/4/1984
       """
-    When my records are sorted
+    When I run the application
     Then I should see
       """
       Chandra Mick M Red 9/14/1953
       Robson Fenley F Purple 7/4/1984
       Hart Gershwin F Blue 7/14/1984
       Baczyk Bran M Yellow 9/14/1984
-      al-Nouri Sami F Black 12/1/1984
+      Alnouri Sami F Black 12/1/1984
       """

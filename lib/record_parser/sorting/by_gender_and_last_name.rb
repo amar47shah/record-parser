@@ -1,8 +1,14 @@
 module RecordParser
   module Sorting
     class ByGenderAndLastName < Base
-      def show
-        display(Sorter.new(records).by_gender_and_last_name)
+      def sort
+        gender_sets.flat_map { |same_gender| same_gender.sort_by(&:last_name) }
+      end
+
+    private
+
+      def gender_sets
+        @records.partition(&:feminine?)
       end
     end
   end

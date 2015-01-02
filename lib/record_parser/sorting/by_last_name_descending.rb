@@ -1,8 +1,8 @@
 module RecordParser
   module Sorting
     class ByLastNameDescending < Base
-      def show
-        display(Sorter.new(records).by_last_name_descending)
+      def sort
+        @records.sort { |first, second| second.last_name <=> first.last_name }
       end
     end
   end

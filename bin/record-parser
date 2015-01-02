@@ -2,10 +2,4 @@
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 require 'record_parser'
 
-module RecordParser::Sorting
-  case ARGV.shift
-  when 'last-name-descending' then ByLastNameDescending
-  when 'gender-and-last-name' then ByGenderAndLastName
-  when 'birth-date'           then ByBirthDate
-  end.new(ARGF, $stdout).show
-end
+RecordParser::CommandLineInterface.new($stdout).run(ARGV.shift, ARGF)

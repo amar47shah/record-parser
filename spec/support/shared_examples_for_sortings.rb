@@ -1,22 +1,20 @@
-shared_examples 'shows sorted records' do
-  let(:out) { double('Out') }
-  let(:file) { double('File') }
-  let(:sorting) { sorting_class.new(file, out) }
-  let(:contents) { "Record One\nRecord Two\n" }
-  let(:unsorted) { contents.lines.map(&:chomp) }
-  let(:sorted) { unsorted.reverse }
-  before do
-    allow(out).to receive(:puts)
-    allow(file).to receive(:read).and_return(contents)
-    sorter = double('Sorter')
-    allow(RecordParser::Sorter).to receive(:new).
-                                   with(unsorted).
-                                   and_return(sorter)
-    allow(sorter).to receive(sort_method).and_return(sorted)
+shared_examples 'returns the single record' do
+  let(:only_record) { double('OnlyRecord') }
+  let(:records) { [only_record] }
+  before { messages.each { |message| allow(only_record).to receive(message) } }
+  it { is_expected.to eq([only_record]) }
+end
+
+shared_examples 'returns the two in correct order' do
+  let(:first) { double('FirstRecord') }
+  let(:second) { double('SecondRecord') }
+  let(:in_correct_order) { [first, second] }
+  context 'when already in order' do
+    let(:records) { in_correct_order }
+    it { is_expected.to eq(in_correct_order) }
   end
-  it 'displays the sorted records' do
-    expect(out).to receive(:puts).with(sorted.first).ordered
-    expect(out).to receive(:puts).with(sorted.last).ordered
-    sorting.show
+  context 'when switched' do
+    let(:records) { in_correct_order.reverse }
+    it { is_expected.to eq(in_correct_order) }
   end
 end
