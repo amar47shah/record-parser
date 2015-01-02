@@ -18,8 +18,18 @@ module RecordParser
     describe '#feminine?' do
       subject { record.feminine? }
       context 'when feminine' do
-        let(:record) { Record.new('Hart Gershwin F Blue 7/14/1984') }
-        it { is_expected.to be_truthy }
+        context 'with space-delimited input' do
+          let(:record) { Record.new('Hart Gershwin F Blue 7/14/1984') }
+          it { is_expected.to be_truthy }
+        end
+        context 'with comma-delimited input' do
+          let(:record) { Record.new('Hart, Gershwin, F, Blue, 7/14/1984') }
+          it { is_expected.to be_truthy }
+        end
+        context 'with pipe-delimited input' do
+          let(:record) { Record.new('Hart | Gershwin | F | Blue | 7/14/1984') }
+          it { is_expected.to be_truthy }
+        end
       end
       context 'when masculine' do
         let(:record) { Record.new('Robson Marcus M Green 8/25/1989') }
@@ -34,21 +44,33 @@ module RecordParser
         it { is_expected.to eq('Baczyk') }
       end
       context 'when "Rue"' do
-        let(:record) { Record.new('Rue Sandra F Blue 12/1/1977') }
-        it { is_expected.to eq('Rue') }
+        context 'with space-delimited input' do
+          let(:record) { Record.new('Rue Sandra F Blue 12/1/1977') }
+          it { is_expected.to eq('Rue') }
+        end
+        context 'with comma-delimited input' do
+          let(:record) { Record.new('Rue, Sandra, F, Blue, 12/1/1977') }
+          it { is_expected.to eq('Rue') }
+        end
       end
     end
 
     describe '#to_s' do
-      subject { "#{record}" }
-      context 'when "Chandra Mick M Red 9/14/1953"' do
-        let(:record) { Record.new('Chandra Mick M Red 9/14/1953') }
-        it { is_expected.to eq('Chandra Mick M Red 9/14/1953') }
+      shared_examples 'retains original string representation' do |string|
+        subject { "#{record}" }
+        context "when '#{string}'" do
+          let(:record) { Record.new(string) }
+          it { is_expected.to eq(string) }
+        end
       end
-      context 'when "Robson Fenley F Purple 7/4/1984"' do
-        let(:record) { Record.new('Robson Fenley F Purple 7/4/1984') }
-        it { is_expected.to eq('Robson Fenley F Purple 7/4/1984') }
-      end
+      it_has_behavior 'retains original string representation',
+                      'Chandra Mick M Red 9/14/1953'
+      it_has_behavior 'retains original string representation',
+                      'Robson Fenley F Purple 7/4/1984'
+      it_has_behavior 'retains original string representation',
+                      'Robson, Fenley, F, Purple, 7/4/1984'
+      it_has_behavior 'retains original string representation',
+                      'Robson | Fenley | F | Purple | 7/4/1984'
     end
   end
 end

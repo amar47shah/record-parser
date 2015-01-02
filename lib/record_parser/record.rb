@@ -2,8 +2,10 @@ require 'date'
 
 module RecordParser
   class Record
-    def initialize(line)
-      @fields = line.split(' ')
+    def initialize(string)
+      @fields = string.split(' ')
+      @fields.include?('|') and @delimiter = ' | '
+      @fields.reject! { |field| field == '|' }
     end
 
     def birth_date
@@ -15,17 +17,17 @@ module RecordParser
     end
 
     def last_name
-      @fields.first
+      @fields.first.delete(',')
     end
 
     def to_s
-      @fields.join(' ')
+      @fields.join(@delimiter || ' ')
     end
 
   private
 
     def gender
-      @fields[2]
+      @fields[2][0]
     end
   end
 end
