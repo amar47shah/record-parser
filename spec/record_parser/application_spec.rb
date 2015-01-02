@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 module RecordParser
-  describe Application do
-    let(:application) { Application.new(out) }
+  describe CommandLineInterface do
+    let(:application) { CommandLineInterface.new(out) }
     let(:out) { double('Out') }
     before { allow(out).to receive(:puts) }
     describe '#run' do

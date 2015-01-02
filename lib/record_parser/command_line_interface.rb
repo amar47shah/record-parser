@@ -1,5 +1,5 @@
 module RecordParser
-  class Application
+  class CommandLineInterface
     def initialize(out)
       @out = out
     end
