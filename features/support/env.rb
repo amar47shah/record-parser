@@ -22,7 +22,7 @@ class FakeFile
   end
 
   def read
-    @bad and raise Errno::ENOENT
+    raise Errno::ENOENT if @bad
     @contents
   end
 end
@@ -33,7 +33,6 @@ class FakeOutput
   end
 
   def puts(message)
-    messages << "#{message}"
-    nil
+    messages << "#{message}" && nil
   end
 end
