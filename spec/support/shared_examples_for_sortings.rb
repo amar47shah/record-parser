@@ -1,17 +1,20 @@
-shared_examples 'sorts records' do |sort_method|
-  let(:sorting) { sorting_class.new(unsorted) }
-  let(:unsorted) { [record_one, record_two] }
-  let(:record_one) { double('RecordOne') }
-  let(:record_two) { double('RecordTwo') }
-  let(:sorted) { unsorted.reverse }
-  before do
-    sorter = double('Sorter')
-    allow(RecordParser::Sorter).to receive(:new).
-                                   with(unsorted).
-                                   and_return(sorter)
-    allow(sorter).to receive(sort_method).and_return(sorted)
+shared_examples 'returns the single record' do
+  let(:only_record) { double('OnlyRecord') }
+  let(:records) { [only_record] }
+  before { messages.each { |m| allow(only_record).to receive(m) } }
+  it { is_expected.to eq([only_record]) }
+end
+
+shared_examples 'returns the two in correct order' do
+  let(:first) { double('FirstRecord') }
+  let(:second) { double('SecondRecord') }
+  let(:in_correct_order) { [first, second] }
+  context 'when already in order' do
+    let(:records) { in_correct_order }
+    it { is_expected.to eq(in_correct_order) }
   end
-  it "sorts the records #{"#{sort_method}".gsub('_', ' ')}" do
-    expect(sorting.sort).to eq(sorted)
+  context 'when switched' do
+    let(:records) { in_correct_order.reverse }
+    it { is_expected.to eq(in_correct_order) }
   end
 end
