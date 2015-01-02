@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'support/date_helper'
+require 'support/helpers/date_helper'
 
 module RecordParser
   describe Record do

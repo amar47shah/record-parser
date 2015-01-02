@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'support/shared_examples_for_sortings'
-require 'support/stub_helper'
+require 'support/helpers/stub_helper'
 
 module RecordParser
   module Sorting
