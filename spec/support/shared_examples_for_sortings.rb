@@ -1,7 +1,6 @@
-shared_examples 'shows sorted records' do |sort_method|
-  let(:out) { double('Out') }
+shared_examples 'sorts records' do |sort_method|
   let(:file) { double('File') }
-  let(:sorting) { sorting_class.new(file, out) }
+  let(:sorting) { sorting_class.new(file) }
   let(:record_one) { double('RecordOne') }
   let(:record_two) { double('RecordTwo') }
   let(:unsorted) { [record_one, record_two] }
@@ -20,9 +19,7 @@ shared_examples 'shows sorted records' do |sort_method|
                                    and_return(sorter)
     allow(sorter).to receive(sort_method).and_return(sorted)
   end
-  it "displays the records sorted #{"#{sort_method}".gsub('_', ' ')}" do
-    expect(out).to receive(:puts).with(sorted.first).ordered
-    expect(out).to receive(:puts).with(sorted.last).ordered
-    sorting.show
+  it "sorts the records #{"#{sort_method}".gsub('_', ' ')}" do
+    expect(sorting.sort).to eq(sorted)
   end
 end

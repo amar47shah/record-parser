@@ -7,7 +7,7 @@ module RecordParser
         @instruction = instruction
         @out = out
         return unless sorting_class
-        sorting_class.new(file, out).show
+        sorting_class.new(file).sort.each { |record| @out.puts record }
       end
 
     private

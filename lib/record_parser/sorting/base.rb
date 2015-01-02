@@ -1,16 +1,11 @@
 module RecordParser
   module Sorting
     class Base
-      def initialize(file, out)
+      def initialize(file)
         @contents = file.read
-        @out = out
       end
 
     private
-
-      def display(records)
-        records.each { |record| @out.puts record }
-      end
 
       def records
         @contents.lines.map { |line| Record.new(line.chomp) }
