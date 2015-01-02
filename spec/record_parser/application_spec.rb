@@ -16,15 +16,23 @@ module RecordParser
             let(:sorting) { double('Sorting') }
             let(:record_one) { double('RecordOne') }
             let(:record_two) { double('RecordTwo') }
-            let(:records) { [record_one, record_two] }
+            let(:unsorted) { [record_one, record_two] }
+            let(:sorted) { unsorted.reverse }
             let(:run_application) { Application.run(instruction, file, out) }
             before do
+              allow(file).to receive(:read).and_return("RecordOne\nRecordTwo\n")
+              allow(RecordParser::Record).to receive(:new).
+                                             with('RecordOne').
+                                             and_return(record_one)
+              allow(RecordParser::Record).to receive(:new).
+                                             with('RecordTwo').
+                                             and_return(record_two)
               allow(sorting_class).to receive(:new).and_return(sorting)
-              allow(sorting).to receive(:sort).and_return(records)
-              records.each { |r| allow(out).to receive(:puts).with(r) }
+              allow(sorting).to receive(:sort).and_return(sorted)
+              sorted.each { |r| allow(out).to receive(:puts).with(r) }
             end
             it "instantiates a #{sorting_class}" do
-              expect(sorting_class).to receive(:new).with(file)
+              expect(sorting_class).to receive(:new).with(unsorted)
               run_application
             end
             it 'sorts' do
@@ -32,8 +40,7 @@ module RecordParser
               run_application
             end
             it 'outputs the sorted records' do
-              expect(out).to receive(:puts).with(record_one).ordered
-              expect(out).to receive(:puts).with(record_two).ordered
+              sorted.each { |r| expect(out).to receive(:puts).with(r).ordered }
               run_application
             end
           end
