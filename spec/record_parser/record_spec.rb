@@ -56,20 +56,20 @@ module RecordParser
     end
 
     describe '#to_s' do
-      shared_examples 'retains original string representation' do |string|
+      shared_examples 'returns data inline and space-delimited' do |string|
         subject { "#{record}" }
         context "when '#{string}'" do
           let(:record) { Record.new(string) }
-          it { is_expected.to eq(string) }
+          it { is_expected.to eq(string.delete(',|').squeeze(' ')) }
         end
       end
-      it_has_behavior 'retains original string representation',
+      it_has_behavior 'returns data inline and space-delimited',
                       'Chandra Mick M Red 9/14/1953'
-      it_has_behavior 'retains original string representation',
+      it_has_behavior 'returns data inline and space-delimited',
                       'Robson Fenley F Purple 7/4/1984'
-      it_has_behavior 'retains original string representation',
+      it_has_behavior 'returns data inline and space-delimited',
                       'Robson, Fenley, F, Purple, 7/4/1984'
-      it_has_behavior 'retains original string representation',
+      it_has_behavior 'returns data inline and space-delimited',
                       'Robson | Fenley | F | Purple | 7/4/1984'
     end
   end

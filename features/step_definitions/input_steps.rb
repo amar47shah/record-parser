@@ -20,6 +20,6 @@ Given /^I have chosen to sort by last name descending$/ do
   @instruction = 'last-name-descending'
 end
 
-Given /^my file contains$/ do |contents|
+Given /^my files contain$/ do |contents|
   file.contents = contents
 end
