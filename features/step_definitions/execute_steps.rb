@@ -1,3 +1,3 @@
 When /^I run the application$/ do
-  RecordParser::Application.run(@instruction, file, out)
+  RecordParser::Application.new(out).run(@instruction, file)
 end

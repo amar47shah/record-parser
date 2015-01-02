@@ -15,9 +15,14 @@ class CustomWorld
 end
 
 class FakeFile
-  attr_writer :contents
+  attr_writer :bad, :contents, :name
+
+  def filename
+    @name
+  end
 
   def read
+    @bad and raise Errno::ENOENT
     @contents
   end
 end

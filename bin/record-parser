@@ -2,4 +2,4 @@
 $LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 require 'record_parser'
 
-RecordParser::Application.run(ARGV.shift, ARGF, $stdout)
+RecordParser::Application.new($stdout).run(ARGV.shift, ARGF)
