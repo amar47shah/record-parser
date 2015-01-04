@@ -1,11 +1,5 @@
 Given /^I have chosen the bad sorting instruction "(.*?)"$/ do |bad_instruction|
   @instruction = bad_instruction
-  file.contents = ''
-end
-
-Given /^I have chosen the non\-existent file "(.*?)"$/ do |bad_filename|
-  file.bad = true
-  file.name = bad_filename
 end
 
 Given /^I have chosen to sort by birth date$/ do
@@ -18,10 +12,6 @@ end
 
 Given /^I have chosen to sort by last name descending$/ do
   @instruction = 'last-name-descending'
-end
-
-Given /^my files contain$/ do |contents|
-  file.contents = contents
 end
 
 When /^I run the application$/ do

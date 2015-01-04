@@ -14,7 +14,7 @@ module CommandLineHelper
 
     def read
       @bad and fail Errno::ENOENT, "@ rb_sysopen - #{@name}"
-      @contents
+      @contents ||= ''
     end
   end
 
