@@ -1,6 +1,6 @@
 require 'record_parser'
 
-module IOHelper
+module CommandLineHelper
   def file
     @file ||= FakeFile.new
   end
@@ -29,4 +29,4 @@ module IOHelper
   end
 end
 
-World(IOHelper)
+World(CommandLineHelper)
