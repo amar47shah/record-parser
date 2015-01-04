@@ -1,15 +1,7 @@
-When /^the web client requests GET \/records\/birth_date$/ do
-  pending
+When /^the web client requests GET (.*)$/ do |path|
+  get(path)
 end
 
-When /^the web client requests GET \/records\/gender$/ do
-  pending
-end
-
-When /^the web client requests GET \/records\/name$/ do
-  pending
-end
-
-Then /^the response should be JSON:$/ do |string|
-  pending
+Then /^the response should be JSON:$/ do |json|
+  expect(JSON.parse(last_response.body)).to eq(JSON.parse(json))
 end

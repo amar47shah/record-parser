@@ -1,4 +1,12 @@
+require 'api'
 require 'record_parser'
+require 'rack/test'
+
+module WebHelper
+  def app
+    API::Base
+  end
+end
 
 module CommandLineHelper
   def file
@@ -29,4 +37,4 @@ module CommandLineHelper
   end
 end
 
-World(CommandLineHelper)
+World(CommandLineHelper, Rack::Test::Methods, WebHelper)
