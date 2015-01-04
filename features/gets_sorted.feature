@@ -5,13 +5,14 @@ Feature: Web client gets sorted records as JSON
   so that I can use the data in my application
 
   Scenario: Sorted by birth date
-    Given The system knows about these records:
-      | last_name | first_name | gender | favorite_color | birth_date |
-      |  Baczyk   |    Bran    |   M    |     Yellow     | 9/14/1984  |
-      |  Alnouri  |    Sami    |   F    |     Black      | 12/1/1984  |
-      |   Hart    |  Gershwin  |   F    |      Blue      | 7/14/1984  |
-      |  Chandra  |    Mick    |   M    |      Red       | 9/14/1953  |
-      |  Robson   |   Fenley   |   F    |     Purple     |  7/4/1984  |
+    Given my files contain
+      """
+      Baczyk Bran M Yellow 9/14/1984
+      Alnouri Sami F Black 12/1/1984
+      Hart Gershwin F Blue 7/14/1984
+      Chandra Mick M Red 9/14/1953
+      Robson Fenley F Purple 7/4/1984
+      """
     When the web client requests GET /records/birth_date
     Then the response should be JSON:
       """
@@ -53,12 +54,13 @@ Feature: Web client gets sorted records as JSON
         """
 
   Scenario: Sorted by gender and last name
-    Given The system knows about these records:
-      | last_name | first_name | gender | favorite_color | birth_date |
-      |  Robson   |   Marcus   |   M    |     Green      | 8/25/1989  |
-      |    Rue    |   Sandra   |   F    |      Blue      | 12/1/1977  |
-      |  Chandra  |    Mick    |   M    |      Red       | 9/14/1953  |
-      |   Hart    |  Gershwin  |   F    |      Blue      | 7/14/1984  |
+    Given my files contain
+      """
+      Robson Marcus M Green 8/25/1989
+      Rue Sandra F Blue 12/1/1977
+      Chandra Mick M Red 9/14/1953
+      Hart Gershwin F Blue 7/14/1984
+      """
     When the web client requests GET /records/gender
     Then the response should be JSON:
       """
@@ -93,11 +95,12 @@ Feature: Web client gets sorted records as JSON
         """
 
   Scenario: Sorted by last name descending
-    Given The system knows about these records:
-      | last_name | first_name | gender | favorite_color | birth_date |
-      |  Chandra  |    Mick    |   M    |      Red       | 9/14/1953  |
-      |    Rue    |   Sandra   |   F    |      Blue      | 12/1/1977  |
-      |   Hart    |  Gershwin  |   F    |      Blue      | 7/14/1984  |
+    Given my files contain
+      """
+      Chandra Mick M Red 9/14/1953
+      Rue Sandra F Blue 12/1/1977
+      Hart Gershwin F Blue 7/14/1984
+      """
     When the web client requests GET /records/name
     Then the response should be JSON:
       """
