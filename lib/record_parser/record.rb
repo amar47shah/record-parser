@@ -15,7 +15,7 @@ module RecordParser
     end
 
     def last_name
-      @fields.first.delete(',')
+      @fields.first
     end
 
     def to_s
@@ -25,7 +25,7 @@ module RecordParser
   private
 
     def gender
-      @fields[2][0]
+      @fields[2]
     end
   end
 end
