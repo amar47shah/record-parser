@@ -1,10 +1,6 @@
 require 'record_parser'
 
-World do
-  CustomWorld.new
-end
-
-class CustomWorld
+module IOHelper
   def file
     @file ||= FakeFile.new
   end
@@ -12,23 +8,25 @@ class CustomWorld
   def out
     @out ||= FakeOutput.new
   end
-end
 
-class FakeFile
-  attr_writer :bad, :contents, :name
+  class FakeFile
+    attr_writer :bad, :contents, :name
 
-  def read
-    fail Errno::ENOENT, "@ rb_sysopen - #{@name}" if @bad
-    @contents
+    def read
+      @bad and fail Errno::ENOENT, "@ rb_sysopen - #{@name}"
+      @contents
+    end
+  end
+
+  class FakeOutput
+    def messages
+      @messages ||= []
+    end
+
+    def puts(message)
+      messages << "#{message}" && nil
+    end
   end
 end
 
-class FakeOutput
-  def messages
-    @messages ||= []
-  end
-
-  def puts(message)
-    messages << "#{message}" && nil
-  end
-end
+World(IOHelper)
