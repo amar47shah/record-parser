@@ -91,11 +91,11 @@ module RecordParser
     end
 
     describe '#to_s' do
-      shared_examples 'returns data inline and space-delimited' do |string|
+      shared_examples 'returns data inline and space-delimited' do |input|
         subject { "#{record}" }
-        context "when '#{string}'" do
-          let(:record) { Record.new(string) }
-          it { is_expected.to eq(string.delete(',|').squeeze(' ')) }
+        context "when '#{input}'" do
+          let(:record) { Record.new(input) }
+          it { is_expected.to eq(input.delete(',|').squeeze(' ')) }
         end
       end
       it_has_behavior 'returns data inline and space-delimited',
