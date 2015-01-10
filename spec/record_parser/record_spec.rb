@@ -55,6 +55,41 @@ module RecordParser
       end
     end
 
+    describe '#to_json' do
+      describe 'single record' do
+        subject { JSON.parse(record.to_json) }
+        shared_examples 'returns data as json' do |string|
+          context "when #{string}" do
+            let(:record) { Record.new(string) }
+            let(:json) do
+              labels = %i(last_name first_name gender favorite_color birth_date)
+              JSON.parse(Hash[*labels.zip(string.split(' ')).flatten].to_json)
+            end
+            it { is_expected.to eq(json) }
+          end
+        end
+        it_has_behavior 'returns data as json',
+                        'Baczyk Bran M Yellow 9/14/1984'
+        it_has_behavior 'returns data as json',
+                        'Alnouri Sami F Black 12/1/1984'
+      end
+      describe 'collection of records' do
+        subject { JSON.parse(records.to_json) }
+        let(:records) { [first, second].map { |string| Record.new(string) } }
+        let(:first ) { 'Baczyk Bran M Yellow 9/14/1984' }
+        let(:second) { 'Alnouri Sami F Black 12/1/1984' }
+        let(:json) do
+          JSON.parse(
+            [first, second].map do |string|
+              labels = %i(last_name first_name gender favorite_color birth_date)
+              JSON.parse(Hash[*labels.zip(string.split(' ')).flatten].to_json)
+            end.to_json
+          )
+        end
+        it { is_expected.to eq(json) }
+      end
+    end
+
     describe '#to_s' do
       shared_examples 'returns data inline and space-delimited' do |string|
         subject { "#{record}" }
