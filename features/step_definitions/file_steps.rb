@@ -6,3 +6,8 @@ end
 Given /^my files contain$/ do |contents|
   file.contents = contents
 end
+
+Given /^the API store contains$/ do |contents|
+  file.contents = contents
+  API::Store.file = file
+end

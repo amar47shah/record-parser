@@ -5,7 +5,7 @@ Feature: Web client gets sorted records as JSON
   so that I can use the data in my application
 
   Scenario: Sorted by birth date
-    Given my files contain
+    Given the API store contains
       """
       Baczyk Bran M Yellow 9/14/1984
       Alnouri Sami F Black 12/1/1984
@@ -51,10 +51,10 @@ Feature: Web client gets sorted records as JSON
           "favorite_color": "Black",
           "birth_date": "12/1/1984"
         } ]
-        """
+      """
 
   Scenario: Sorted by gender and last name
-    Given my files contain
+    Given the API store contains
       """
       Robson Marcus M Green 8/25/1989
       Rue Sandra F Blue 12/1/1977
@@ -92,10 +92,10 @@ Feature: Web client gets sorted records as JSON
           "favorite_color": "Green",
           "birth_date": "8/25/1989"
         } ]
-        """
+      """
 
   Scenario: Sorted by last name descending
-    Given my files contain
+    Given the API store contains
       """
       Chandra Mick M Red 9/14/1953
       Rue Sandra F Blue 12/1/1977
@@ -125,4 +125,4 @@ Feature: Web client gets sorted records as JSON
           "favorite_color": "Red",
           "birth_date": "9/14/1953"
         } ]
-        """
+      """
