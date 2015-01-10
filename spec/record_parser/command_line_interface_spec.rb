@@ -9,7 +9,7 @@ module RecordParser
       let(:file) { double('File') }
       before do
         allow(out).to receive(:puts)
-        allow(file).to receive(:read).and_return('')
+        allow(file).to receive(:readlines).and_return([])
       end
 
       context 'with good input' do
@@ -17,18 +17,22 @@ module RecordParser
           context "with instruction: #{good_instruction}" do
             let(:instruction) { good_instruction }
             let(:sorting) { double('Sorting') }
-            let(:record_one) { double('RecordOne') }
-            let(:record_two) { double('RecordTwo') }
-            let(:unsorted) { [record_one, record_two] }
+            let(:lines_records) do
+              { line_one => record_one, line_two => record_two }
+            end
+            let(:line_one) { "RecordOne\n" }
+            let(:line_two) { "RecordTwo\n" }
+            let(:record_one) { double(line_one.chomp) }
+            let(:record_two) { double(line_two.chomp) }
+            let(:unsorted) { lines_records.values }
             let(:sorted) { unsorted.reverse }
             before do
-              allow(file).to receive(:read).and_return("RecordOne\nRecordTwo\n")
-              allow(RecordParser::Record).to receive(:new).
-                                             with('RecordOne').
-                                             and_return(record_one)
-              allow(RecordParser::Record).to receive(:new).
-                                             with('RecordTwo').
-                                             and_return(record_two)
+              allow(file).to receive(:readlines).and_return(lines_records.keys)
+              lines_records.each do |line, record|
+                allow(
+                  RecordParser::Record
+                ).to receive(:new).with(line.chomp).and_return(record)
+              end
               allow(sorting_class).to receive(:new).and_return(sorting)
               allow(sorting).to receive(:sort).and_return(sorted)
             end
@@ -79,7 +83,7 @@ module RecordParser
         shared_examples 'handles unreadable file' do |bad_filename|
           let(:instruction) { 'birth-date' }
           before do
-            allow(file).to receive(:read).and_raise(
+            allow(file).to receive(:readlines).and_raise(
               Errno::ENOENT,
               "No such file or directory @ rb_sysopen - #{bad_filename}"
             )

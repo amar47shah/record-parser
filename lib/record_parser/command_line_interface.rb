@@ -28,7 +28,7 @@ module RecordParser
     end
 
     def unsorted_records
-      @unsorted ||= @file.read.lines.map { |line| Record.new(line.chomp) }
+      @unsorted ||= @file.readlines.map { |line| Record.new(line.chomp) }
     rescue Errno::ENOENT => error
       filename = error.message.partition('@ rb_sysopen - ').last
       @out.puts "Could not read file: #{filename}"

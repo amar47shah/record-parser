@@ -20,9 +20,9 @@ module CommandLineHelper
   class FakeFile
     attr_writer :bad, :contents, :name
 
-    def read
+    def readlines
       @bad and fail Errno::ENOENT, "@ rb_sysopen - #{@name}"
-      @contents ||= ''
+      (@contents ||= '').lines
     end
   end
 
