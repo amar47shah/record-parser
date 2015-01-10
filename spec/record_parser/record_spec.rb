@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'support/helpers/date_helper'
+require 'support/helpers/json_helper'
+require 'support/matchers/eq_json'
 
 module RecordParser
   describe Record do
@@ -57,15 +59,11 @@ module RecordParser
 
     describe '#to_json' do
       describe 'single record' do
-        subject { JSON.parse(record.to_json) }
-        shared_examples 'returns data as json' do |string|
-          context "when #{string}" do
-            let(:record) { Record.new(string) }
-            let(:json) do
-              labels = %i(last_name first_name gender favorite_color birth_date)
-              JSON.parse(Hash[*labels.zip(string.split(' ')).flatten].to_json)
-            end
-            it { is_expected.to eq(json) }
+        shared_examples 'returns data as json' do |input|
+          subject { record.to_json }
+          context "when #{input}" do
+            let(:record) { Record.new(input) }
+            it { is_expected.to eq_json(from(input)) }
           end
         end
         it_has_behavior 'returns data as json',
@@ -74,19 +72,14 @@ module RecordParser
                         'Alnouri Sami F Black 12/1/1984'
       end
       describe 'collection of records' do
-        subject { JSON.parse(records.to_json) }
-        let(:records) { [first, second].map { |string| Record.new(string) } }
-        let(:first ) { 'Baczyk Bran M Yellow 9/14/1984' }
-        let(:second) { 'Alnouri Sami F Black 12/1/1984' }
-        let(:json) do
-          JSON.parse(
-            [first, second].map do |string|
-              labels = %i(last_name first_name gender favorite_color birth_date)
-              JSON.parse(Hash[*labels.zip(string.split(' ')).flatten].to_json)
-            end.to_json
-          )
+        subject { records.to_json }
+        let(:records) { inputs.map { |input| Record.new(input) } }
+        let(:inputs) do
+          ['Baczyk Bran M Yellow 9/14/1984', 'Alnouri Sami F Black 12/1/1984']
         end
-        it { is_expected.to eq(json) }
+        it 'serializes an array of records' do
+          is_expected.to eq_json(from_collection(inputs))
+        end
       end
     end
 
