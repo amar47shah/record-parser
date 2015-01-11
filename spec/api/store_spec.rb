@@ -15,11 +15,11 @@ module API
       subject { Store.records }
       let(:records) { double('FileRecords') }
       before do
-         reader = double('Reader')
-         allow(RecordParser::Reader).to receive(:new).
-                                        with(file).
-                                        and_return(reader)
-         allow(reader).to receive(:records).and_return(records)
+        reader = double('Reader')
+        allow(RecordParser::Reader).to receive(:new).
+                                       with(file).
+                                       and_return(reader)
+        allow(reader).to receive(:records).and_return(records)
       end
       it { is_expected.to eq(records) }
     end
