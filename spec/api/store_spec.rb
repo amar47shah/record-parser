@@ -14,14 +14,21 @@ module API
     describe '::records' do
       subject { Store.records }
       let(:records) { double('FileRecords') }
-      before do
-        reader = double('Reader')
-        allow(RecordParser::Reader).to receive(:new).
-                                       with(file).
-                                       and_return(reader)
-        allow(reader).to receive(:records).and_return(records)
+      context 'on initial access' do
+        before do
+          Store.records = nil
+          reader = double('Reader')
+          allow(RecordParser::Reader).to receive(:new).
+                                         with(file).
+                                         and_return(reader)
+          allow(reader).to receive(:records).and_return(records)
+        end
+        it { is_expected.to eq(records) }
       end
-      it { is_expected.to eq(records) }
+      context 'on subsequent access' do
+        before { Store.records = records }
+        it { is_expected.to eq(records) }
+      end
     end
   end
 end
