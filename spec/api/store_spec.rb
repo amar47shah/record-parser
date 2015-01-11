@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'api'
+require 'api_spec_helper'
 
 module API
   describe Store do

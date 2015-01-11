@@ -1,5 +1,4 @@
-require 'spec_helper'
-require 'api'
+require 'api_spec_helper'
 require 'support/shared_examples/for_sorting_endpoints'
 
 describe API::GetByBirthDate do
