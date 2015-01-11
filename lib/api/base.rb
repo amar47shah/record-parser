@@ -10,8 +10,10 @@ module API
   class Base < Grape::API
     content_type :json, 'application/json'
     default_format :json
-    mount API::GetByBirthDate
-    mount API::GetByGenderAndLastName
-    mount API::GetByLastNameDescending
+    resource :records do
+      mount API::GetByBirthDate
+      mount API::GetByGenderAndLastName
+      mount API::GetByLastNameDescending
+    end
   end
 end
