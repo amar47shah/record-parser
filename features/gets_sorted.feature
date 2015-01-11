@@ -13,7 +13,7 @@ Feature: Web client gets sorted records as JSON
       Chandra Mick M Red 9/14/1953
       Robson Fenley F Purple 7/4/1984
       """
-    When the web client requests GET /records/birth_date
+    When the web client requests GET /records/birthdate
     Then the response should be JSON:
       """
       [ {
