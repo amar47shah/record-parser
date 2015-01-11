@@ -7,9 +7,10 @@ module RecordParser
       let(:application) { CommandLineInterface.new(out) }
       let(:out) { double('Out') }
       let(:file) { double('File') }
+      let(:reader) { double('Reader') }
       before do
         allow(out).to receive(:puts)
-        allow(file).to receive(:readlines).and_return([])
+        allow(Reader).to receive(:new).with(file).and_return(reader)
       end
 
       context 'with good input' do
@@ -17,22 +18,10 @@ module RecordParser
           context "with instruction: #{good_instruction}" do
             let(:instruction) { good_instruction }
             let(:sorting) { double('Sorting') }
-            let(:lines_records) do
-              { line_one => record_one, line_two => record_two }
-            end
-            let(:line_one) { "RecordOne\n" }
-            let(:line_two) { "RecordTwo\n" }
-            let(:record_one) { double(line_one.chomp) }
-            let(:record_two) { double(line_two.chomp) }
-            let(:unsorted) { lines_records.values }
+            let(:unsorted) { [double('RecordTwo'), double('RecordOne')] }
             let(:sorted) { unsorted.reverse }
             before do
-              allow(file).to receive(:readlines).and_return(lines_records.keys)
-              lines_records.each do |line, record|
-                allow(
-                  RecordParser::Record
-                ).to receive(:new).with(line.chomp).and_return(record)
-              end
+              allow(reader).to receive(:records).and_return(unsorted)
               allow(sorting_class).to receive(:new).and_return(sorting)
               allow(sorting).to receive(:sort).and_return(sorted)
             end
@@ -79,7 +68,7 @@ module RecordParser
             it_has_behavior 'notifies the user',
                             "Unrecognized instruction: #{bad_instruction}"
             it 'does not read the file' do
-              expect(file).not_to receive(:readlines)
+              expect(Reader).not_to receive(:new)
               run_application
             end
           end
@@ -87,7 +76,7 @@ module RecordParser
         shared_examples 'handles unreadable file' do |bad_filename|
           let(:instruction) { 'birth-date' }
           before do
-            allow(file).to receive(:readlines).and_raise(
+            allow(reader).to receive(:records).and_raise(
               Errno::ENOENT,
               "No such file or directory @ rb_sysopen - #{bad_filename}"
             )
