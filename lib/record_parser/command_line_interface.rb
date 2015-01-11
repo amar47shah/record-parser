@@ -7,7 +7,7 @@ module RecordParser
     def run(instruction, file)
       @instruction = instruction
       @file = file
-      return unless unsorted_records && sorting_class
+      return unless sorting_class && unsorted_records
       display(sorting_class.new(unsorted_records).sort)
     end
 

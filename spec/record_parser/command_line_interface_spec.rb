@@ -78,6 +78,10 @@ module RecordParser
             it_has_behavior 'does not raise an error'
             it_has_behavior 'notifies the user',
                             "Unrecognized instruction: #{bad_instruction}"
+            it 'does not read the file' do
+              expect(file).not_to receive(:readlines)
+              run_application
+            end
           end
         end
         shared_examples 'handles unreadable file' do |bad_filename|
