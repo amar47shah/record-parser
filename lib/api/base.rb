@@ -2,18 +2,16 @@ require 'grape'
 require 'json'
 
 require 'record_parser'
-require 'api/get_by_birth_date'
-require 'api/get_by_gender_and_last_name'
-require 'api/get_by_last_name_descending'
+require 'api/endpoints'
 
 module API
   class Base < Grape::API
     content_type :json, 'application/json'
     default_format :json
     resource :records do
-      mount API::GetByBirthDate
-      mount API::GetByGenderAndLastName
-      mount API::GetByLastNameDescending
+      mount API::Endpoints::GetByBirthDate
+      mount API::Endpoints::GetByGenderAndLastName
+      mount API::Endpoints::GetByLastNameDescending
     end
   end
 end
