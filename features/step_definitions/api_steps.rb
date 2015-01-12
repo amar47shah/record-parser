@@ -1,3 +1,8 @@
+Given /^the API store contains$/ do |contents|
+  file.prepare_from(contents)
+  API::Store.file = file
+end
+
 When /^the web client requests GET (.*)$/ do |path|
   get(path)
 end
