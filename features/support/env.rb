@@ -22,7 +22,7 @@ module CommandLineHelper
 
     def readlines
       @bad and fail Errno::ENOENT, "@ rb_sysopen - #{@name}"
-      (@contents ||= '').lines
+      (@contents || '').lines
     end
   end
 
