@@ -20,7 +20,7 @@ shared_examples 'a sorting endpoint' do |path, sorting_class|
       allow(sorting).to receive(:sort).and_return(sorted)
       allow(sorted).to receive(:to_json).and_return(sorted_json)
     end
-    it 'instantiates a sorting by birth date' do
+    it "instantiates a #{sorting_class}" do
       expect(sorting_class).to receive(:new).with(records)
       send_request
     end
