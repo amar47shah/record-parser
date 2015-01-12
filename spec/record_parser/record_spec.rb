@@ -63,7 +63,7 @@ module RecordParser
           subject { record.to_json }
           context "when #{input}" do
             let(:record) { Record.new(input) }
-            it { is_expected.to eq_json(from(input)) }
+            it { is_expected.to eq_json(for_record_from(input)) }
           end
         end
         it_has_behavior 'returns data as json',
@@ -78,7 +78,7 @@ module RecordParser
           ['Baczyk Bran M Yellow 9/14/1984', 'Alnouri Sami F Black 12/1/1984']
         end
         it 'serializes an array of records' do
-          is_expected.to eq_json(from_collection(inputs))
+          is_expected.to eq_json(for_records_from(inputs))
         end
       end
     end

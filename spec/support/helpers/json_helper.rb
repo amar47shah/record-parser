@@ -1,11 +1,11 @@
 require 'json'
 
 module JSONHelper
-  def from(input)
+  def for_record_from(input)
     InputSerializer.hash_from(input).to_json
   end
 
-  def from_collection(inputs)
+  def for_records_from(inputs)
     inputs.map { |input| InputSerializer.hash_from(input) }.to_json
   end
 
