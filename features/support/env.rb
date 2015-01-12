@@ -2,7 +2,7 @@ require 'api'
 require 'record_parser'
 require 'rack/test'
 
-module WebHelper
+module APIHelper
   def app
     API::Base
   end
@@ -37,4 +37,4 @@ module CommandLineHelper
   end
 end
 
-World(CommandLineHelper, Rack::Test::Methods, WebHelper)
+World(APIHelper, CommandLineHelper, Rack::Test::Methods)
