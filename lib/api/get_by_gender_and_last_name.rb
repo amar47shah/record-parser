@@ -1,11 +1,13 @@
+require 'api/sort_helper'
 require 'api/store_helper'
 
 module API
   class GetByGenderAndLastName < Grape::API
+    helpers SortHelper
     helpers StoreHelper
 
     get :gender do
-      RecordParser::Sorting::ByGenderAndLastName.new(records).sort
+      sort(records, :ByGenderAndLastName)
     end
   end
 end
