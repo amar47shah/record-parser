@@ -1,4 +1,5 @@
 require 'date'
+require 'json'
 
 module RecordParser
   class Record
@@ -15,7 +16,11 @@ module RecordParser
     end
 
     def last_name
-      @fields.first.delete(',')
+      @fields.first
+    end
+
+    def to_json(*a)
+      Hash[*labels.zip(@fields).flatten].to_json(*a)
     end
 
     def to_s
@@ -25,7 +30,11 @@ module RecordParser
   private
 
     def gender
-      @fields[2][0]
+      @fields[2]
+    end
+
+    def labels
+      %i(last_name first_name gender favorite_color birth_date)
     end
   end
 end

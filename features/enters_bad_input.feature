@@ -9,7 +9,14 @@ Feature: Record manager enters bad input
     When I run the application
     Then I should see "Unrecognized instruction: middle-name"
 
-  Scenario: Enter bad filename
-    Given I have chosen the non-existent file "my_fikle.txt"
+  Scenario Outline: Enter bad filename
+    Given I have chosen to sort by <method>
+      And I have chosen the non-existent file "my_fikle.txt"
     When I run the application
     Then I should see "Could not read file: my_fikle.txt"
+
+    Examples:
+      |        method        |
+      |      birth date      |
+      | gender and last name |
+      | last name descending |

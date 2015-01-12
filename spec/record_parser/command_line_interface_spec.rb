@@ -7,9 +7,10 @@ module RecordParser
       let(:application) { CommandLineInterface.new(out) }
       let(:out) { double('Out') }
       let(:file) { double('File') }
+      let(:reader) { double('Reader') }
       before do
         allow(out).to receive(:puts)
-        allow(file).to receive(:read).and_return('')
+        allow(Reader).to receive(:new).with(file).and_return(reader)
       end
 
       context 'with good input' do
@@ -17,18 +18,10 @@ module RecordParser
           context "with instruction: #{good_instruction}" do
             let(:instruction) { good_instruction }
             let(:sorting) { double('Sorting') }
-            let(:record_one) { double('RecordOne') }
-            let(:record_two) { double('RecordTwo') }
-            let(:unsorted) { [record_one, record_two] }
+            let(:unsorted) { [double('RecordTwo'), double('RecordOne')] }
             let(:sorted) { unsorted.reverse }
             before do
-              allow(file).to receive(:read).and_return("RecordOne\nRecordTwo\n")
-              allow(RecordParser::Record).to receive(:new).
-                                             with('RecordOne').
-                                             and_return(record_one)
-              allow(RecordParser::Record).to receive(:new).
-                                             with('RecordTwo').
-                                             and_return(record_two)
+              allow(reader).to receive(:records).and_return(unsorted)
               allow(sorting_class).to receive(:new).and_return(sorting)
               allow(sorting).to receive(:sort).and_return(sorted)
             end
@@ -74,12 +67,16 @@ module RecordParser
             it_has_behavior 'does not raise an error'
             it_has_behavior 'notifies the user',
                             "Unrecognized instruction: #{bad_instruction}"
+            it 'does not read the file' do
+              expect(Reader).not_to receive(:new)
+              run_application
+            end
           end
         end
         shared_examples 'handles unreadable file' do |bad_filename|
           let(:instruction) { 'birth-date' }
           before do
-            allow(file).to receive(:read).and_raise(
+            allow(reader).to receive(:records).and_raise(
               Errno::ENOENT,
               "No such file or directory @ rb_sysopen - #{bad_filename}"
             )

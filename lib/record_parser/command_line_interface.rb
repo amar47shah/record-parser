@@ -7,8 +7,8 @@ module RecordParser
     def run(instruction, file)
       @instruction = instruction
       @file = file
-      return unless unsorted_records && sorting_class
-      display(sorting_class.new(unsorted_records).sort)
+      return unless sorting_class && unsorted_records
+      display(sorted_records)
     end
 
   private
@@ -21,6 +21,10 @@ module RecordParser
       records.each { |record| @out.puts record }
     end
 
+    def sorted_records
+      sorting_class.new(unsorted_records).sort
+    end
+
     def sorting_class
       Sorting.const_get(:"By#{camelcase_instruction}")
     rescue NameError
@@ -28,7 +32,7 @@ module RecordParser
     end
 
     def unsorted_records
-      @unsorted ||= @file.read.lines.map { |line| Record.new(line.chomp) }
+      @unsorted_records ||= Reader.new(@file).records
     rescue Errno::ENOENT => error
       filename = error.message.partition('@ rb_sysopen - ').last
       @out.puts "Could not read file: #{filename}"

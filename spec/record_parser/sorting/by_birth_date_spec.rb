@@ -1,5 +1,6 @@
 require 'spec_helper'
-require 'support/shared_examples_for_sortings'
+require 'support/shared_examples/for_sortings'
+require 'support/helpers/date_helper'
 require 'support/helpers/stub_helper'
 
 module RecordParser

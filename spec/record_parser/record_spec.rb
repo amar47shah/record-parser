@@ -1,5 +1,7 @@
 require 'spec_helper'
 require 'support/helpers/date_helper'
+require 'support/helpers/json_helper'
+require 'support/matchers/eq_json'
 
 module RecordParser
   describe Record do
@@ -55,12 +57,38 @@ module RecordParser
       end
     end
 
+    describe '#to_json' do
+      describe 'single record' do
+        shared_examples 'returns data as json' do |input|
+          subject { record.to_json }
+          context "when #{input}" do
+            let(:record) { Record.new(input) }
+            it { is_expected.to eq_json(for_record_from(input)) }
+          end
+        end
+        it_has_behavior 'returns data as json',
+                        'Baczyk Bran M Yellow 9/14/1984'
+        it_has_behavior 'returns data as json',
+                        'Alnouri Sami F Black 12/1/1984'
+      end
+      describe 'collection of records' do
+        subject { records.to_json }
+        let(:records) { inputs.map { |input| Record.new(input) } }
+        let(:inputs) do
+          ['Baczyk Bran M Yellow 9/14/1984', 'Alnouri Sami F Black 12/1/1984']
+        end
+        it 'serializes an array of records' do
+          is_expected.to eq_json(for_records_from(inputs))
+        end
+      end
+    end
+
     describe '#to_s' do
-      shared_examples 'returns data inline and space-delimited' do |string|
+      shared_examples 'returns data inline and space-delimited' do |input|
         subject { "#{record}" }
-        context "when '#{string}'" do
-          let(:record) { Record.new(string) }
-          it { is_expected.to eq(string.delete(',|').squeeze(' ')) }
+        context "when '#{input}'" do
+          let(:record) { Record.new(input) }
+          it { is_expected.to eq(input.delete(',|').squeeze(' ')) }
         end
       end
       it_has_behavior 'returns data inline and space-delimited',

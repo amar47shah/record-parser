@@ -1,6 +1,5 @@
 Given /^I have chosen the bad sorting instruction "(.*?)"$/ do |bad_instruction|
   @instruction = bad_instruction
-  file.contents = ''
 end
 
 Given /^I have chosen the non\-existent file "(.*?)"$/ do |bad_filename|
@@ -21,5 +20,18 @@ Given /^I have chosen to sort by last name descending$/ do
 end
 
 Given /^my files contain$/ do |contents|
-  file.contents = contents
+  file.prepare_from(contents)
+end
+
+When /^I run the application$/ do
+  RecordParser::CommandLineInterface.new(out).run(@instruction, file)
+end
+
+Then /^I should see "(.*?)"$/ do |message|
+  expect(out.messages).to include(message)
+end
+
+Then /^I should see$/ do |paragraph|
+  lines = paragraph.split("\n")
+  expect(out.messages.each_cons(lines.size)).to include(lines)
 end
