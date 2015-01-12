@@ -8,7 +8,7 @@ module RecordParser
       @instruction = instruction
       @file = file
       return unless sorting_class && unsorted_records
-      display(sorting_class.new(unsorted_records).sort)
+      display(sorted_records)
     end
 
   private
@@ -19,6 +19,10 @@ module RecordParser
 
     def display(records)
       records.each { |record| @out.puts record }
+    end
+
+    def sorted_records
+      sorting_class.new(unsorted_records).sort
     end
 
     def sorting_class
