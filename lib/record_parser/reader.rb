@@ -1,3 +1,5 @@
+require 'record_parser/record'
+
 module RecordParser
   class Reader
     def initialize(file)

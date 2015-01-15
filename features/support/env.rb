@@ -1,4 +1,5 @@
 require 'api'
+require 'record_parser'
 require 'rack/test'
 
 module APIHelper

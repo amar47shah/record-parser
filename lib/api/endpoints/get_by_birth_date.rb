@@ -1,3 +1,5 @@
+require 'grape'
+
 require 'api/helpers'
 
 module API

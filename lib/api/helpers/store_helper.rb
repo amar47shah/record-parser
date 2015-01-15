@@ -1,3 +1,5 @@
+require 'api/store'
+
 module API
   module Helpers
     module StoreHelper

@@ -1,3 +1,5 @@
+require 'record_parser/sorting'
+
 module API
   module Helpers
     module SortHelper

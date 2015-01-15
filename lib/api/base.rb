@@ -1,7 +1,6 @@
 require 'grape'
 require 'json'
 
-require 'record_parser'
 require 'api/endpoints'
 
 module API

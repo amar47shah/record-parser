@@ -1,3 +1,5 @@
+require 'record_parser/reader'
+
 module API
   class Store
     class << self
