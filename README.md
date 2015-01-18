@@ -1,8 +1,30 @@
 record-parser
 =============
 
-Command-line data parser with API.
+Command-line data parser with web API.
 Specification: http://reverb.com/page/dev-challenge
+
+Command Line
+------------
+`$ bin/record-parser <instruction> <files>`
+* Allowed instructions:
+  - `birth-date`
+  - `gender-and-last-name`
+  - `last-name-descending`
+* Either a single file or a list of files, separated by spaces, is allowed.
+
+API
+---
+* Create a record from a new data line: `POST /records`
+  - The parameter `line` represents the data line
+  - Allowed formats:
+    + `LastName FirstName Gender FavoriteColor DateOfBirth`
+    + `LastName, FirstName, Gender, FavoriteColor, DateOfBirth`
+    + `LastName | FirstName | Gender | FavoriteColor | DateOfBirth`
+* List sorted records as JSON:
+  - `GET /records/gender`
+  - `GET /records/birthdate`
+  - `GET /records/name`
 
 Assumptions
 -----------
