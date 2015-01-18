@@ -1,15 +1,14 @@
 require 'grape'
 
-require 'api/helpers'
+require 'api/helpers/sort_helper'
 
 module API
   module Endpoints
     class GetByBirthDate < Grape::API
       helpers Helpers::SortHelper
-      helpers Helpers::StoreHelper
 
       get :birthdate do
-        sort(records, :ByBirthDate)
+        sort_records(:ByBirthDate)
       end
     end
   end

@@ -1,15 +1,14 @@
 require 'grape'
 
-require 'api/helpers'
+require 'api/helpers/sort_helper'
 
 module API
   module Endpoints
     class GetByGenderAndLastName < Grape::API
       helpers Helpers::SortHelper
-      helpers Helpers::StoreHelper
 
       get :gender do
-        sort(records, :ByGenderAndLastName)
+        sort_records(:ByGenderAndLastName)
       end
     end
   end

@@ -1,15 +1,14 @@
 require 'grape'
 
-require 'api/helpers'
+require 'api/helpers/sort_helper'
 
 module API
   module Endpoints
     class GetByLastNameDescending < Grape::API
       helpers Helpers::SortHelper
-      helpers Helpers::StoreHelper
 
       get :name do
-        sort(records, :ByLastNameDescending)
+        sort_records(:ByLastNameDescending)
       end
     end
   end
