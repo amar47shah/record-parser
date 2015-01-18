@@ -2,6 +2,26 @@ require 'api_spec_helper'
 
 module API
   describe Store do
+    describe '::has_line?' do
+      subject { Store.has_line?(line) }
+      let(:line) { double('Line') }
+      let(:record) { double('Record') }
+      before do
+        allow(RecordParser::Record).to receive(:new).
+                                       with(line).
+                                       and_return(record)
+        allow(Store).to receive(:records).and_return(records)
+      end
+      context 'without the record in the store' do
+        let(:records) { [] }
+        it { is_expected.to be_falsey }
+      end
+      context 'with the record in the store' do
+        let(:records) { [record] }
+        it { is_expected.to be_truthy }
+      end
+    end
+
     describe '::new' do
       subject { -> { Store.new } }
       it { is_expected.to raise_error(NoMethodError) }
@@ -34,26 +54,6 @@ module API
           allow(reader).to receive(:records).and_return(other_records)
         end
         it { is_expected.to eq(other_records) }
-      end
-    end
-
-    describe '::has_line?' do
-      subject { Store.has_line?(line) }
-      let(:line) { double('Line') }
-      let(:record) { double('Record') }
-      before do
-        allow(RecordParser::Record).to receive(:new).
-                                       with(line).
-                                       and_return(record)
-        allow(Store).to receive(:records).and_return(records)
-      end
-      context 'without the record in the store' do
-        let(:records) { [] }
-        it { is_expected.to be_falsey }
-      end
-      context 'with the record in the store' do
-        let(:records) { [record] }
-        it { is_expected.to be_truthy }
       end
     end
   end
