@@ -11,7 +11,7 @@ Command Line
   - `birth-date`
   - `gender-and-last-name`
   - `last-name-descending`
-* Either a single file or a list of files, separated by spaces, is allowed.
+* Multiple files should be separated by a space: `one.txt two.txt three.txt`
 
 API
 ---
@@ -22,8 +22,8 @@ API
     + `LastName, FirstName, Gender, FavoriteColor, DateOfBirth`
     + `LastName | FirstName | Gender | FavoriteColor | DateOfBirth`
 * List sorted records as JSON:
-  - `GET /records/gender`
   - `GET /records/birthdate`
+  - `GET /records/gender`
   - `GET /records/name`
 
 Assumptions
