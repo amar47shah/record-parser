@@ -1,12 +1,14 @@
 require 'grape'
 
-require 'api/store'
+require 'api/helpers/create_helper'
 
 module API
   module Endpoints
     class Post < Grape::API
+      helpers Helpers::CreateHelper
+
       post do
-        Store.add(params[:line])
+        create_record_from(params[:line])
       end
     end
   end
