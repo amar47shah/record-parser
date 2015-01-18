@@ -8,6 +8,7 @@ module API
       undef_method :new
 
       def add(line)
+        @file.puts line
         records << record_from(line)
       end
 
