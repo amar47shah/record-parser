@@ -19,8 +19,8 @@ Given /^I have chosen to sort by last name descending$/ do
   @instruction = 'last-name-descending'
 end
 
-Given /^my files contain$/ do |contents|
-  file.prepare_from(contents)
+Given /^my files contain$/ do |content|
+  file.lines = content.lines
 end
 
 When /^I run the application$/ do

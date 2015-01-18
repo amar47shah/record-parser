@@ -1,3 +1,6 @@
+require 'record_parser/reader'
+require 'record_parser/sorting'
+
 module RecordParser
   class CommandLineInterface
     def initialize(out)

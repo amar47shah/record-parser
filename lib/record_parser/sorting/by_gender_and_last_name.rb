@@ -1,3 +1,5 @@
+require 'record_parser/sorting/base'
+
 module RecordParser
   module Sorting
     class ByGenderAndLastName < Base

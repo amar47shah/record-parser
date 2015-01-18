@@ -1,13 +1,7 @@
-require 'rack/test'
+require 'support/helpers/rack_helper'
 require 'support/matchers/eq_json'
 
 shared_examples 'a sorting endpoint' do |path, sorting_class|
-  include Rack::Test::Methods
-
-  def app
-    API::Base
-  end
-
   describe "GET /#{path}" do
     let(:send_request) { get(path) }
     let(:records) { double('Records') }

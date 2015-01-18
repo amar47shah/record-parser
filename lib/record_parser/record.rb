@@ -7,8 +7,12 @@ module RecordParser
       @fields = string.delete(',|').split(' ')
     end
 
+    def ==(anOther)
+      fields == anOther.fields
+    end
+
     def birth_date
-      Date.strptime(@fields.last, '%m/%d/%Y')
+      Date.strptime(fields.last, '%m/%d/%Y')
     end
 
     def feminine?
@@ -16,15 +20,21 @@ module RecordParser
     end
 
     def last_name
-      @fields.first
+      fields.first
     end
 
     def to_json(*a)
-      Hash[*labels.zip(@fields).flatten].to_json(*a)
+      Hash[*labels.zip(fields).flatten].to_json(*a)
     end
 
     def to_s
-      @fields.join(' ')
+      fields.join(' ')
+    end
+
+  protected
+
+    def fields
+      @fields
     end
 
   private
