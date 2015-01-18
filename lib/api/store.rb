@@ -1,4 +1,5 @@
 require 'record_parser/reader'
+require 'record_parser/record'
 
 module API
   class Store
@@ -9,6 +10,10 @@ module API
       def file=(file)
         @file = file
         @records = nil
+      end
+
+      def has_line?(line)
+        records.include?(RecordParser::Record.new(line))
       end
 
       def records
