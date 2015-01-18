@@ -5,6 +5,25 @@ require 'support/matchers/eq_json'
 
 module RecordParser
   describe Record do
+    describe '#==' do
+      subject { record == another_record }
+      let(:another_record) { Record.new('Nagamura Leandra F Blue 6/4/1980') }
+      context 'with record from same fields' do
+        context 'delimited the same' do
+          let(:record) { Record.new('Nagamura Leandra F Blue 6/4/1980') }
+          it { is_expected.to be_truthy }
+        end
+        context 'delimited differently' do
+          let(:record) { Record.new('Nagamura, Leandra, F, Blue, 6/4/1980') }
+          it { is_expected.to be_truthy }
+        end
+      end
+      context 'with record from different fields' do
+        let(:record) { Record.new('Velez Tobyn F Green 7/14/1984') }
+        it { is_expected.to be_falsey }
+      end
+    end
+
     describe '#birth_date' do
       subject { record.birth_date }
       context 'when "9/14/1953"' do
