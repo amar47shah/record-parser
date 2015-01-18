@@ -18,11 +18,7 @@ module CommandLineHelper
   end
 
   class FakeFile
-    attr_writer :bad, :name
-
-    def prepare_from(contents)
-      @lines = contents.lines
-    end
+    attr_writer :bad, :lines, :name
 
     def readlines
       @bad and fail Errno::ENOENT, "@ rb_sysopen - #{@name}"

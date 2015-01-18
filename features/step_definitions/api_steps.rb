@@ -1,8 +1,8 @@
 $LOAD_PATH.unshift(File.expand_path('../../../spec/support/matchers', __FILE__))
 require 'eq_json'
 
-Given /^the API store contains$/ do |contents|
-  file.prepare_from(contents)
+Given /^the API store contains$/ do |content|
+  file.lines = content.lines
   API::Store.file = file
 end
 
