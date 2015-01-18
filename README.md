@@ -6,7 +6,7 @@ Specification: http://reverb.com/page/dev-challenge
 
 Assumptions
 -----------
-* Each record ends with a newline character.
+* Each data line in a file ends with a newline character.
 * Each record can have only one gender.
   - Possible genders are limited to feminine ('F') and non-feminine (any other).
 * Dates appear as M/D/YYYY:
