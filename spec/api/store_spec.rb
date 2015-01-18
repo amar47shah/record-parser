@@ -28,12 +28,16 @@ module API
       subject { Store.has_line?(line) }
       let(:line) { double('Line') }
       let(:record) { double('Record') }
+      let(:records) { [] }
       before do
         allow(RecordParser::Record).to receive(:new).and_return(record)
         allow(Store).to receive(:records).and_return(records)
       end
+      it 'instantiates a record from the data line' do
+        expect(RecordParser::Record).to receive(:new).with(line)
+        subject
+      end
       context 'without the record in the store' do
-        let(:records) { [] }
         it { is_expected.to be(false) }
       end
       context 'with the record in the store' do
