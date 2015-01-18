@@ -5,9 +5,10 @@ module API
   module Endpoints
     describe Post do
       describe 'POST /records' do
-        before { post('/records', line: nil) }
-        subject { last_response.status }
-        it { is_expected.to eq(201) }
+        it 'adds the record' do
+          expect(Store).to receive(:add).with('Record')
+          post('/records', line: 'Record')
+        end
       end
     end
   end
