@@ -8,6 +8,7 @@ Feature: Web client posts record
     Given the API store is open
     When the web client POSTs <record>
     Then the API store should contain <record>
+     And <record> should be written to the file
 
     Examples:
       |                   record                   |

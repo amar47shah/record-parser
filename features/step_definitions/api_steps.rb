@@ -18,6 +18,10 @@ When /^the web client POSTs (.*)$/ do |line|
   post('/records', line: line)
 end
 
+Then /^(.*) should be written to the file$/ do |line|
+  expect(file.readlines).to include("#{line}\n")
+end
+
 Then /^the API store should contain (.*)$/ do |line|
   expect(API::Store).to have_line(line)
 end
