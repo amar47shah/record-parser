@@ -11,6 +11,7 @@ module API
       mount API::Endpoints::GetByBirthDate
       mount API::Endpoints::GetByGenderAndLastName
       mount API::Endpoints::GetByLastNameDescending
+      mount API::Endpoints::Post
     end
   end
 end
