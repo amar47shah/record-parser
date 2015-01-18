@@ -12,10 +12,7 @@ module API
         reader = double('Reader')
         allow(RecordParser::Reader).to receive(:new).and_return(reader)
         allow(reader).to receive(:records).and_return([])
-        record = double('Record')
-        allow(RecordParser::Record).to receive(:new).
-                                       with(line).
-                                       and_return(record)
+        allow(RecordParser::Record).to receive(:new)
       end
       it 'adds record to store' do
         add_record
@@ -32,9 +29,7 @@ module API
       let(:line) { double('Line') }
       let(:record) { double('Record') }
       before do
-        allow(RecordParser::Record).to receive(:new).
-                                       with(line).
-                                       and_return(record)
+        allow(RecordParser::Record).to receive(:new).and_return(record)
         allow(Store).to receive(:records).and_return(records)
       end
       context 'without the record in the store' do
