@@ -1,7 +1,8 @@
 record-parser
 =============
 
-Command-line data parser. Specification: http://reverb.com/page/dev-challenge
+Command-line data parser with API.
+Specification: http://reverb.com/page/dev-challenge
 
 Current Assumptions
 -------------------
