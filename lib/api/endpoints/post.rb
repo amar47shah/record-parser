@@ -1,5 +1,7 @@
 require 'grape'
 
+require 'api/store'
+
 module API
   module Endpoints
     class Post < Grape::API
