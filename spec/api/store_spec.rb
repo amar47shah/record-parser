@@ -14,11 +14,11 @@ module API
       end
       context 'without the record in the store' do
         let(:records) { [] }
-        it { is_expected.to be_falsey }
+        it { is_expected.to be(false) }
       end
       context 'with the record in the store' do
         let(:records) { [record] }
-        it { is_expected.to be_truthy }
+        it { is_expected.to be(true) }
       end
     end
 
