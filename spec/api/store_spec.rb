@@ -2,6 +2,23 @@ require 'api_spec_helper'
 
 module API
   describe Store do
+    describe '::add' do
+      subject { Store }
+      let(:line) { double('NewRecordDataLine') }
+      before do
+        Store.file = double('File')
+        reader = double('Reader')
+        allow(RecordParser::Reader).to receive(:new).and_return(reader)
+        allow(reader).to receive(:records).and_return([])
+        record = double('Record')
+        allow(RecordParser::Record).to receive(:new).
+                                       with(line).
+                                       and_return(record)
+        Store.add(line)
+      end
+      it { is_expected.to have_line(line) }
+    end
+
     describe '::has_line?' do
       subject { Store.has_line?(line) }
       let(:line) { double('Line') }
