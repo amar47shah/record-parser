@@ -1,2 +1,2 @@
 require 'api/base'
-require 'api/store.rb'
+require 'api/store'
