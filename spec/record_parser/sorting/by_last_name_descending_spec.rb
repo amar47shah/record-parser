@@ -7,7 +7,6 @@ module RecordParser
     describe ByLastNameDescending do
       let(:sorting) { ByLastNameDescending.new(records) }
       describe '#sort' do
-        subject { sorting.sort }
         context 'with only one record' do
           let(:messages) { %i(last_name) }
           it_has_behavior 'returns the single record'

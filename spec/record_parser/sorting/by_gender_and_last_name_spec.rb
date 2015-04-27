@@ -7,7 +7,6 @@ module RecordParser
     describe ByGenderAndLastName do
       let(:sorting) { ByGenderAndLastName.new(records) }
       describe '#sort' do
-        subject { sorting.sort }
         context 'with only one record' do
           let(:messages) { %i(feminine? last_name) }
           it_has_behavior 'returns the single record'

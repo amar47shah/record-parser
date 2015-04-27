@@ -8,7 +8,6 @@ module RecordParser
     describe ByBirthDate do
       let(:sorting) { ByBirthDate.new(records) }
       describe '#sort' do
-        subject { sorting.sort }
         context 'with only one record' do
           let(:messages) { %i(birth_date) }
           it_has_behavior 'returns the single record'
