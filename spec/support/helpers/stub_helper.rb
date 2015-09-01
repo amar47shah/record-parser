@@ -1,8 +1,6 @@
 module StubHelper
   def prepare(object, messages_and_values)
-    messages_and_values.each do |message, value|
-      allow(object).to receive(message).and_return(value)
-    end
+    allow(object).to receive_messages(messages_and_values)
   end
 end
 
