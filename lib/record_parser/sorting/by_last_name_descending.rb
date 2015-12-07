@@ -4,7 +4,7 @@ module RecordParser
   module Sorting
     class ByLastNameDescending < Base
       def sort
-        @records.sort { |first, second| second.last_name <=> first.last_name }
+        @records.sort_by(&:last_name).reverse
       end
     end
   end
