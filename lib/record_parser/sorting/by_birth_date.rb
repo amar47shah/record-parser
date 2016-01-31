@@ -1,8 +1,10 @@
-require 'record_parser/sorting/base'
-
 module RecordParser
   module Sorting
-    class ByBirthDate < Base
+    class ByBirthDate
+      def initialize(records)
+        @records = records
+      end
+
       def sort
         @records.sort_by(&:birth_date)
       end
