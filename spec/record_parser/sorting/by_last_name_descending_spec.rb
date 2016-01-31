@@ -5,7 +5,7 @@ require 'support/helpers/stub_helper'
 module RecordParser
   module Sorting
     describe ByLastNameDescending do
-      let(:sorting) { ByLastNameDescending.new(records) }
+      let(:sorting) { ByLastNameDescending.new }
       describe '#sort' do
         context 'with only one record' do
           let(:messages) { %i(last_name) }

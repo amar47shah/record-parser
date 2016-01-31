@@ -25,12 +25,8 @@ module RecordParser
               allow(sorting_class).to receive(:new).and_return(sorting)
               allow(sorting).to receive(:sort).and_return(sorted)
             end
-            it "instantiates a #{sorting_class}" do
-              expect(sorting_class).to receive(:new).with(unsorted)
-              run_application
-            end
             it 'sorts' do
-              expect(sorting).to receive(:sort)
+              expect(sorting).to receive(:sort).with(unsorted)
               run_application
             end
             it 'outputs the sorted records' do

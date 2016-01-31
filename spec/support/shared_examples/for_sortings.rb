@@ -1,5 +1,5 @@
 shared_examples 'returns the single record' do
-  subject { sorting.sort }
+  subject { sorting.sort records }
   let(:only_record) { double('OnlyRecord') }
   let(:records) { [only_record] }
   before { messages.each { |message| allow(only_record).to receive(message) } }
@@ -7,7 +7,7 @@ shared_examples 'returns the single record' do
 end
 
 shared_examples 'returns the two in correct order' do
-  subject { sorting.sort }
+  subject { sorting.sort records }
   let(:first) { double('FirstRecord') }
   let(:second) { double('SecondRecord') }
   let(:in_correct_order) { [first, second] }

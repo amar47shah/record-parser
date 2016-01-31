@@ -5,7 +5,7 @@ module API
   module Helpers
     module SortHelper
       def sort_records(view)
-        RecordParser::Sorting.const_get(view).new(Store.records).sort
+        RecordParser::Sorting.const_get(view).new.sort Store.records
       end
     end
   end

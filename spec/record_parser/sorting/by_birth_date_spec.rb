@@ -6,7 +6,7 @@ require 'support/helpers/stub_helper'
 module RecordParser
   module Sorting
     describe ByBirthDate do
-      let(:sorting) { ByBirthDate.new(records) }
+      let(:sorting) { ByBirthDate.new }
       describe '#sort' do
         context 'with only one record' do
           let(:messages) { %i(birth_date) }

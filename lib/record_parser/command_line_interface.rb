@@ -25,7 +25,7 @@ module RecordParser
     end
 
     def sorted_records
-      sorting_class.new(unsorted_records).sort
+      sorting_class.new.sort unsorted_records
     end
 
     def sorting_class

@@ -5,7 +5,7 @@ require 'support/helpers/stub_helper'
 module RecordParser
   module Sorting
     describe ByGenderAndLastName do
-      let(:sorting) { ByGenderAndLastName.new(records) }
+      let(:sorting) { ByGenderAndLastName.new }
       describe '#sort' do
         context 'with only one record' do
           let(:messages) { %i(gender last_name) }
