@@ -1,6 +1,5 @@
 require 'spec_helper'
 require 'support/helpers/date_helper'
-require 'support/helpers/stub_helper'
 
 module RecordParser
   describe Sorter do
@@ -9,9 +8,7 @@ module RecordParser
         subject { Sorter.new(indexes).sort records }
         let(:only_record) { double('OnlyRecord') }
         let(:records) { [only_record] }
-        before do
-          messages.each { |message| allow(only_record).to receive(message) }
-        end
+        before { messages.each { |m| allow(only_record).to receive m } }
         it { is_expected.to eq([only_record]) }
       end
 
@@ -20,6 +17,10 @@ module RecordParser
         let(:first) { double('FirstRecord') }
         let(:second) { double('SecondRecord') }
         let(:in_correct_order) { [first, second] }
+        before do
+          allow(first).to receive_messages first_messages
+          allow(second).to receive_messages second_messages
+        end
         context 'when already in order' do
           let(:records) { in_correct_order }
           it { is_expected.to eq(in_correct_order) }
@@ -37,10 +38,8 @@ module RecordParser
           it_has_behavior 'returns the single record'
         end
         context 'with two records' do
-          before do
-            prepare(first , { birth_date: date_from('9/14/1953') })
-            prepare(second, { birth_date: date_from('9/14/1984') })
-          end
+          let(:first_messages) { { birth_date: date_from('9/14/1953') } }
+          let(:second_messages) { { birth_date: date_from('9/14/1984') } }
           it_has_behavior 'returns the two in correct order'
         end
       end
@@ -53,24 +52,18 @@ module RecordParser
         end
         context 'with two records' do
           context 'when both masculine' do
-            before do
-              prepare(first , { gender: 'M', last_name: 'Chandra' })
-              prepare(second, { gender: 'M', last_name: 'Robson'  })
-            end
+            let(:first_messages) { { gender: 'M', last_name: 'Chandra' } }
+            let(:second_messages) { { gender: 'M', last_name: 'Robson' } }
             it_has_behavior 'returns the two in correct order'
           end
           context 'when both feminine' do
-            before do
-              prepare(first , { gender: 'F', last_name: 'Hart' })
-              prepare(second, { gender: 'F', last_name: 'Rue'  })
-            end
+            let(:first_messages) { { gender: 'F', last_name: 'Hart' } }
+            let(:second_messages) { { gender: 'F', last_name: 'Rue' } }
             it_has_behavior 'returns the two in correct order'
           end
           context 'when of different gender' do
-            before do
-              prepare(first , { gender: 'F', last_name: 'Rue'     })
-              prepare(second, { gender: 'M', last_name: 'Chandra' })
-            end
+            let(:first_messages) { { gender: 'F', last_name: 'Rue' } }
+            let(:second_messages) { { gender: 'M', last_name: 'Chandra' } }
             it_has_behavior 'returns the two in correct order'
           end
         end
@@ -83,10 +76,8 @@ module RecordParser
           it_has_behavior 'returns the single record'
         end
         context 'with two records' do
-          before do
-            prepare(first , { last_name: 'Rue'     })
-            prepare(second, { last_name: 'Chandra' })
-          end
+          let(:first_messages) { { last_name: 'Rue' } }
+          let(:second_messages) { { last_name: 'Chandra' } }
           it_has_behavior 'returns the two in correct order'
         end
       end
