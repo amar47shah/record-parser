@@ -10,7 +10,7 @@ module RecordParser
     def run(instruction, file)
       @instruction = instruction
       @file = file
-      return unless sorter && unsorted_records
+      return unless indexes && unsorted_records
       display(sorted_records)
     end
 
@@ -25,6 +25,7 @@ module RecordParser
       when 'birth-date'           then { birth_date: :asc }
       when 'gender-and-last-name' then { gender: :asc, last_name: :asc }
       when 'last-name-descending' then { last_name: :desc }
+      else @out.puts "Unrecognized instruction: #{@instruction}"
       end
     end
 
@@ -33,7 +34,6 @@ module RecordParser
     end
 
     def sorter
-      indexes or return @out.puts "Unrecognized instruction: #{@instruction}"
       @sorter ||= Sorter.new indexes
     end
 
