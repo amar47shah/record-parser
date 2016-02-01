@@ -1,5 +1,5 @@
 require 'record_parser/reader'
-require 'record_parser/sorting'
+require 'record_parser/sorter'
 
 module RecordParser
   class CommandLineInterface
@@ -10,28 +10,31 @@ module RecordParser
     def run(instruction, file)
       @instruction = instruction
       @file = file
-      return unless sorting_class && unsorted_records
+      return unless indexes && unsorted_records
       display(sorted_records)
     end
 
   private
 
-    def camelcase_instruction
-      @instruction.split('-').map(&:capitalize).join
-    end
-
     def display(records)
       records.each { |record| @out.puts record }
     end
 
-    def sorted_records
-      sorting_class.new(unsorted_records).sort
+    def indexes
+      case @instruction
+      when 'birth-date'           then { birth_date: :asc }
+      when 'gender-and-last-name' then { gender: :asc, last_name: :asc }
+      when 'last-name-descending' then { last_name: :desc }
+      else @out.puts "Unrecognized instruction: #{@instruction}"
+      end
     end
 
-    def sorting_class
-      Sorting.const_get(:"By#{camelcase_instruction}")
-    rescue NameError
-      @out.puts "Unrecognized instruction: #{@instruction}"
+    def sorted_records
+      sorter.sort unsorted_records
+    end
+
+    def sorter
+      @sorter ||= Sorter.new indexes
     end
 
     def unsorted_records

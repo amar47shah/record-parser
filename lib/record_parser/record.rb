@@ -15,8 +15,8 @@ module RecordParser
       Date.strptime(fields.last, '%m/%d/%Y')
     end
 
-    def feminine?
-      gender == 'F'
+    def gender
+      @fields[2]
     end
 
     def last_name
@@ -38,10 +38,6 @@ module RecordParser
     end
 
   private
-
-    def gender
-      @fields[2]
-    end
 
     def labels
       %i(last_name first_name gender favorite_color birth_date)

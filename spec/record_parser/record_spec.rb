@@ -36,25 +36,25 @@ module RecordParser
       end
     end
 
-    describe '#feminine?' do
-      subject { record.feminine? }
+    describe '#gender' do
+      subject { record.gender }
       context 'when feminine' do
         context 'with space-delimited input' do
           let(:record) { Record.new('Hart Gershwin F Blue 7/14/1984') }
-          it { is_expected.to be(true) }
+          it { is_expected.to eq('F') }
         end
         context 'with comma-delimited input' do
           let(:record) { Record.new('Hart, Gershwin, F, Blue, 7/14/1984') }
-          it { is_expected.to be(true) }
+          it { is_expected.to eq('F') }
         end
         context 'with pipe-delimited input' do
           let(:record) { Record.new('Hart | Gershwin | F | Blue | 7/14/1984') }
-          it { is_expected.to be(true) }
+          it { is_expected.to eq('F') }
         end
       end
       context 'when masculine' do
         let(:record) { Record.new('Robson Marcus M Green 8/25/1989') }
-        it { is_expected.to be(false) }
+        it { is_expected.to eq('M') }
       end
     end
 

@@ -14,23 +14,19 @@ module RecordParser
       end
 
       context 'with good input' do
-        shared_examples 'executes sorting' do |sorting_class, good_instruction|
+        shared_examples 'executes sorting' do |good_instruction, indexes|
           context "with instruction: #{good_instruction}" do
             let(:instruction) { good_instruction }
-            let(:sorting) { double('Sorting') }
+            let(:sorter) { double('Sorter') }
             let(:unsorted) { [double('RecordTwo'), double('RecordOne')] }
             let(:sorted) { unsorted.reverse }
             before do
               allow(reader).to receive(:records).and_return(unsorted)
-              allow(sorting_class).to receive(:new).and_return(sorting)
-              allow(sorting).to receive(:sort).and_return(sorted)
-            end
-            it "instantiates a #{sorting_class}" do
-              expect(sorting_class).to receive(:new).with(unsorted)
-              run_application
+              allow(Sorter).to receive(:new).with(indexes).and_return(sorter)
+              allow(sorter).to receive(:sort).and_return(sorted)
             end
             it 'sorts' do
-              expect(sorting).to receive(:sort)
+              expect(sorter).to receive(:sort).with(unsorted)
               run_application
             end
             it 'outputs the sorted records' do
@@ -40,14 +36,14 @@ module RecordParser
           end
         end
         it_has_behavior 'executes sorting',
-                        Sorting::ByBirthDate,
-                        'birth-date'
+                        'birth-date',
+                        birth_date: :asc
         it_has_behavior 'executes sorting',
-                        Sorting::ByGenderAndLastName,
-                        'gender-and-last-name'
+                        'gender-and-last-name',
+                        gender: :asc, last_name: :asc
         it_has_behavior 'executes sorting',
-                        Sorting::ByLastNameDescending,
-                        'last-name-descending'
+                        'last-name-descending',
+                        last_name: :desc
       end
 
       context 'with bad input' do
