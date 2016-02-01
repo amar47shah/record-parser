@@ -8,7 +8,7 @@ module API
       helpers Helpers::SortHelper
 
       get :name do
-        sort_records(:ByLastNameDescending)
+        sort_records last_name: :desc
       end
     end
   end

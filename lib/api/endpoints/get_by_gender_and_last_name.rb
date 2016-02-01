@@ -8,7 +8,7 @@ module API
       helpers Helpers::SortHelper
 
       get :gender do
-        sort_records(:ByGenderAndLastName)
+        sort_records gender: :asc, last_name: :asc
       end
     end
   end

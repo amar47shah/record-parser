@@ -6,7 +6,7 @@ module API
     describe GetByBirthDate do
       it_behaves_like 'a sorting endpoint',
                       'records/birthdate',
-                      RecordParser::Sorting::ByBirthDate
+                      birth_date: :asc
     end
   end
 end

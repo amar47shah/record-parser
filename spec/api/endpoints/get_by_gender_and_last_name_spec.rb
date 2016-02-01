@@ -6,7 +6,7 @@ module API
     describe GetByGenderAndLastName do
       it_behaves_like 'a sorting endpoint',
                       'records/gender',
-                      RecordParser::Sorting::ByGenderAndLastName
+                      gender: :asc, last_name: :asc
     end
   end
 end

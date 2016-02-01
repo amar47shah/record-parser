@@ -6,7 +6,7 @@ module API
     describe GetByLastNameDescending do
       it_behaves_like 'a sorting endpoint',
                       'records/name',
-                      RecordParser::Sorting::ByLastNameDescending
+                      last_name: :desc
     end
   end
 end

@@ -8,7 +8,7 @@ module API
       helpers Helpers::SortHelper
 
       get :birthdate do
-        sort_records(:ByBirthDate)
+        sort_records birth_date: :asc
       end
     end
   end
