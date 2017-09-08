@@ -45,5 +45,7 @@ $ bundle install
 
 Testing
 -------
+```
 $ bundle exec cucumber
 $ bundle exec rspec -fd
+```
